@@ -327,6 +327,47 @@ class ChannelTests: XCTestCase {
     majorActor.value = 7
     test(value: 7)
   }
+    
+    func testInfiniteChannel() {
+        let exp = expectation(description: "completed")
+        let helper = InfiniteChannel()
+        
+        var updateTime : Date?
+        var completeTime : Date?
+        
+        helper.subscribe()
+            .onUpdate()   { _ in log(msg: "update  "); updateTime = Date() }
+            .onComplete() { _ in log(msg: "complete"); completeTime = Date() }
+        
+        //        this code will fail:
+        
+        //        helper.subscribe()
+        //            .onUpdate(executor: Executor.main)   { _ in log(msg: "update  "); updateTime = Date() }
+        //            .onComplete(executor: Executor.main) { _ in log(msg: "complete"); completeTime = Date() }
+        
+        //        with log ( update sent at 21:0:22, completion at 21:0:23, update and completion received at 21:0:23):
+        
+        //        2019-01-15 21:0:22.9390 : going to update (at com.apple.root.default-qos)
+        //        2019-01-15 21:0:22.9400 : start sleeping (at NSOperationQueue Main Queue)
+        //        2019-01-15 21:0:23.9460 : stop  sleeping (at NSOperationQueue Main Queue)
+        //        2019-01-15 21:0:23.9460 : update   (at NSOperationQueue Main Queue)
+        //        2019-01-15 21:0:23.9470 : complete (at NSOperationQueue Main Queue)
+        
+        
+        log(msg: "start sleeping")
+        sleep(1)
+        helper.performComplete?()
+        log(msg: "stop  sleeping")
+        
+        if let updateTime = updateTime, let completeTime = completeTime {
+            let duration = completeTime.timeIntervalSince(updateTime)
+            if duration > 0.7 {
+                exp.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 2, handler: nil)
+    }
 }
 
 private class DoubleBindTestActor<T>: TestActor {
@@ -341,4 +382,50 @@ private class DoubleBindTestActor<T>: TestActor {
     super.init()
     _dynamicValue = makeDynamicProperty(initialValue)
   }
+}
+
+private class InfiniteChannel {
+    
+    var performComplete : (()->Void)?
+    
+    func subscribe() -> Channel<String,Void> {
+        return channel() { update, completion in
+            log(msg: "going to update")
+            update("*UPDATE*")
+            self.performComplete = { completion(Fallible(success: ())) }
+        }
+    }
+}
+
+func log(msg: String) {
+    let df = DateFormatter()
+    df.dateFormat = "y-MM-dd H:m:ss.SSSS"
+    
+    print("\(df.string(from: Date())) : \(msg) (at \(Thread.current.dbgName))")
+}
+
+public extension Thread {
+    
+    public var dbgName: String {
+        if let currentOperationQueue = OperationQueue.current?.name {
+            
+            if currentOperationQueue.contains("OperationQueue") {
+                return currentOperationQueue
+            } else {
+                return "OperationQueue: \(currentOperationQueue)"
+            }
+            
+        } else if let underlyingDispatchQueue = OperationQueue.current?.underlyingQueue?.label {
+            
+            if underlyingDispatchQueue.contains("DispatchQueue") {
+                return underlyingDispatchQueue
+            } else {
+                return "DispatchQueue: \(underlyingDispatchQueue)"
+            }
+            
+        } else {
+            let name = __dispatch_queue_get_label(nil)
+            return String(cString: name, encoding: .utf8) ?? Thread.current.description
+        }
+    }
 }

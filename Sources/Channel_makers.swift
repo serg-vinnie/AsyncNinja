@@ -44,6 +44,29 @@ public func channel<Update, Success>(
   return producer
 }
 
+/// Convenience constructor of Channel. Encapsulates cancellation and producer creation.
+public func channel<Update, Success>(executor: Executor = .primary, cancellationToken: CancellationToken? = nil,
+                                     bufferSize: Int = AsyncNinjaConstants.defaultChannelBufferSize,
+                                     block: @escaping (_ update: @escaping (Update) -> Void, _ complete: @escaping (Fallible<Success>) -> Void) throws -> Void
+    ) -> Channel<Update, Success> {
+    // TEST: ChannelMakersTests.testInfiniteChannel
+    
+    let producer = Producer<Update, Success>(bufferSize: AsyncNinjaConstants.defaultChannelBufferSize)
+    cancellationToken?.add(cancellable: producer)
+    executor.execute(
+        from: nil
+    ) { [weak producer] (originalExecutor) in
+        
+        do {
+            try block({ producer?.update($0, from: originalExecutor) }, { producer?.complete($0, from: originalExecutor) })
+        } catch{
+            producer?.complete(Fallible(failure: error), from: originalExecutor)
+        }
+    }
+    return producer
+}
+
+
 /// Convenience contextual constructor of Channel. Encapsulates cancellation and producer creation.
 public func channel<U: ExecutionContext, Update, Success>(
   context: U,
