@@ -33,6 +33,7 @@ extension EventSource {
     ) { (event, originalExecutor) in
       if case .completion(let completion) = event {
         block(completion, originalExecutor)
+        print("completition handled \(completion)")
       }
     }
   }
@@ -47,6 +48,7 @@ extension EventSource {
     ) { (event, originalExecutor) in
       if case .update(let update) = event {
         block(update, originalExecutor)
+        print("update handled \(update)")
       }
     }
   }

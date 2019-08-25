@@ -221,4 +221,36 @@ class EventSource_MapTests: XCTestCase {
     XCTAssertEqual([0, 4, 8], updates)
     XCTAssertEqual(success, completion.maybeSuccess!)
   }
+    
+  func testFlatMapDefaultContext() {
+    let exp = expectation(description: "")
+    let ch1 = producer(bufferSize: 2) { producer in
+      for i in 0..<2{
+        producer.update("\(i)")
+      }
+      producer.succeed()
+    } as Producer<String,Void>
+    
+    ch1
+      .flatMap(executor: .main) { self.modify(str: $0) }
+      .onUpdate {
+        print("onUpdate \($0)")
+
+      }
+      .onSuccess { print("complete"); exp.fulfill() }
+
+    sleep(1)
+    
+    waitForExpectations(timeout: 2, handler: nil)
+  }
+  
+  func modify(str: String) -> Channel<String,Void> {
+    return producer(bufferSize: 2) { producer in
+      for i in 0..<2 {
+        producer.update(str + "_\(i)")
+      }
+      producer.succeed()
+    }
+  }
+  
 }
