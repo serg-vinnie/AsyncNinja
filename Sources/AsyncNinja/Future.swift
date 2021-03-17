@@ -253,3 +253,34 @@ public extension Future {
     return delayedCompletion(timeout: timeout)
   }
 }
+
+
+prefix operator ⌘⌘
+public prefix func ⌘⌘<T>(right: T) -> Future<T> {
+    return future(success: right)
+}
+
+public extension Future {
+    
+    
+    static func |<Transformed>(left: Future, right: @escaping (Success)->Transformed) -> Future<Transformed> {
+        return left.map { right($0) }
+    }
+    
+    static func |<Transformed>(left: Future, right: @escaping (Success)->Future<Transformed>) -> Future<Transformed> {
+        return left.flatMap { right($0) }
+    }
+}
+
+public struct FutureWithContext<F: Future<Any>, C: ExecutionContext> {
+    let f: F
+    let c: C
+    
+    static func |<Transformed>(left: Self, right: @escaping (C, F.Success)->Transformed) -> Future<Transformed> {
+        return left.f.map(context: left.c) { context, success in right(left.c, success) }
+    }
+    
+    static func |<Transformed>(left: Self, right: @escaping (C, F.Success)->Future<Transformed>) -> Future<Transformed> {
+        return left.f.flatMap(context: left.c) { context, success in right(left.c, success) }
+    }
+}
