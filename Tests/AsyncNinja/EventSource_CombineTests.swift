@@ -320,6 +320,12 @@ class EventSource_CombineTests: XCTestCase {
         .wait().maybeSuccess!
     
     XCTAssert(sum2 == updates.reduce(0, +))
+    
+    let strings = updates.flatMapFutures { u in
+        future(success: "\(u)")
+    }.waitForAll().updates
+    
+    XCTAssert(updates.map { "\($0)" }.elementsEqual(strings))
   }
     
 }
