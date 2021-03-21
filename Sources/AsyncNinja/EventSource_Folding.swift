@@ -28,3 +28,19 @@ public extension EventSource {
         return promise
     }
 }
+
+public extension Array {
+    func foldr<Accum>(_ a: Accum, block: @escaping (Accum, Element) -> Future<Accum>) -> Future<Accum> {
+        return promise(executor: .userInteractive) { promise in
+            var _a = a
+            for item in self {
+                    switch block(_a, item).wait() {
+                    case .success(let s):   _a = s
+                    case .failure(let err): promise.fail(err)
+                    }
+            }
+            promise.succeed(_a)
+        }
+        
+    }
+}
