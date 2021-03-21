@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B509202607E0B700200979 /* EventSource_Folding.swift */; };
 		OBJ_148 /* BaseProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* BaseProducer.swift */; };
 		OBJ_149 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Box.swift */; };
 		OBJ_150 /* CachableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CachableValue.swift */; };
@@ -206,6 +207,7 @@
 		"AsyncNinja::AsyncNinjaReactiveUITests::Product" /* AsyncNinjaReactiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AsyncNinjaReactiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::AsyncNinjaTests::Product" /* AsyncNinjaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AsyncNinjaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::ImportingTestExecutable::Product" /* ImportingTestExecutable */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = ImportingTestExecutable; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6B509202607E0B700200979 /* EventSource_Folding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSource_Folding.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		OBJ_100 /* EitherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherTests.swift; sourceTree = "<group>"; };
 		OBJ_101 /* EventSource_CombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSource_CombineTests.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				OBJ_38 /* EventSource_Transform.swift */,
 				OBJ_39 /* EventSource_Zip2.swift */,
 				OBJ_40 /* EventSource_ifEmpty.swift */,
+				E6B509202607E0B700200979 /* EventSource_Folding.swift */,
 				OBJ_41 /* ExecutionContext.swift */,
 				OBJ_42 /* Executor.swift */,
 				OBJ_43 /* Fallible.swift */,
@@ -783,6 +786,7 @@
 				OBJ_196 /* Queue.swift in Sources */,
 				OBJ_197 /* ReleasePool.swift in Sources */,
 				OBJ_198 /* Sequence_AsyncFlatMap.swift in Sources */,
+				E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */,
 				OBJ_199 /* Sequence_AsyncMap.swift in Sources */,
 				OBJ_200 /* Sequence_AsyncReduce.swift in Sources */,
 				OBJ_201 /* SinglyLinkedList.swift in Sources */,

@@ -306,4 +306,14 @@ class EventSource_CombineTests: XCTestCase {
       XCTAssertEqual(ifEmpty.updates, [4, 5, 6])
     }
   }
+  
+  func testFoldr() {
+    let updates = [1, 2, 3]
+    let sum = updates.valuesChannel(after: 0.1, interval: 0.1)
+      .foldr(0) { acc, item in future(success: acc + item) }
+      .wait().maybeSuccess!
+    
+    XCTAssert(sum == updates.reduce(0, +))
+  }
+    
 }
