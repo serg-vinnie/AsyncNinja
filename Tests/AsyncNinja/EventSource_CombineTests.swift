@@ -328,4 +328,18 @@ class EventSource_CombineTests: XCTestCase {
     XCTAssert(updates.map { "\($0)" }.elementsEqual(strings))
   }
     
+  func testFlatMapCursor() {
+    func cursorFunc(_ i: Int?) -> Channel<Int,Int?> {
+      return producer(executor: .background) { producer in
+        producer.update(i!)
+        producer.succeed(i! > 0 ? i! - 1 : nil)
+      }
+    }
+    
+    let r = cursor(cursor: 5) { c in cursorFunc(c) }.waitForAll()
+      
+    print(r.updates.elementsEqual([[5,4,3,2,1,0]]))
+    
+  }
+    
 }
