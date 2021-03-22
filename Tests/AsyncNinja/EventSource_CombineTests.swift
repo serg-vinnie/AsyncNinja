@@ -337,9 +337,8 @@ class EventSource_CombineTests: XCTestCase {
     }
     
     let r = cursor(cursor: 5) { c in cursorFunc(c) }.waitForAll()
-      
-    print(r.updates.elementsEqual([[5,4,3,2,1,0]]))
     
+    XCTAssert(r.updates.elementsEqual([[5],[4],[3],[2],[1],[0]]))
   }
     
 }
