@@ -284,3 +284,19 @@ public struct FutureWithContext<F: Future<Any>, C: ExecutionContext> {
         return left.f.flatMap(context: left.c) { context, success in right(left.c, success) }
     }
 }
+
+public extension Future {
+    func asChannel(executor: Executor = .immediate) -> Channel<Success,Void> {
+        return producer(executor: .immediate) { producer in
+            self.onComplete(executor: executor) { fallible in
+                switch fallible {
+                case .success(let succ):
+                    producer.update(succ)
+                    producer.succeed()
+                case .failure(let err):
+                    producer.fail(err) }
+                
+            }
+        }
+    }
+}
