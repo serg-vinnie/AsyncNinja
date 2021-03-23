@@ -321,7 +321,7 @@ class EventSource_CombineTests: XCTestCase {
     
     XCTAssert(sum2 == updates.reduce(0, +))
     
-    let strings = updates.flatMapFutures { u in
+    let strings = updates.flatMapFuture { u in
         future(success: "\(u)")
     }.waitForAll().updates
     

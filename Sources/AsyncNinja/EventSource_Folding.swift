@@ -92,7 +92,7 @@ public extension Array {
         }
     }
     
-    func flatMapFutures<T>(block: @escaping (Element) -> Future<T>) -> Channel<T,Void> {
+    func flatMapFuture<T>(block: @escaping (Element) -> Future<T>) -> Channel<T,Void> {
         let producer = Producer<T,Void>()
         
         Executor.userInteractive.schedule { executor in
@@ -108,7 +108,7 @@ public extension Array {
         return producer
     }
     
-    func flatMapFutures<T,C:ExecutionContext>(context: C, block: @escaping (C, Element) -> Future<T>) -> Channel<T,Void> {
+    func flatMapFuture<T,C:ExecutionContext>(context: C, block: @escaping (C, Element) -> Future<T>) -> Channel<T,Void> {
         let producer = Producer<T,Void>()
         
         Executor.userInteractive.schedule { executor in
