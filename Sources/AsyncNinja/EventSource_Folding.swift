@@ -47,7 +47,7 @@ private extension Producer where Success == Void {
     }
 }
 
-public func cursor<Cursor,U>(executor: Executor = .serialUnique, cursor: Cursor, block: @escaping (Cursor) -> Channel<U, Cursor?>) -> Channel<[U],Void> {
+public func cursor<Cursor,U>(executor: Executor = .userInteractive, cursor: Cursor, block: @escaping (Cursor) -> Channel<U, Cursor?>) -> Channel<[U],Void> {
   let producer = Producer<[U],Void>()
   
   executor.schedule { _ in
