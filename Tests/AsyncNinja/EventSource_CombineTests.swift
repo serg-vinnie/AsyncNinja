@@ -326,6 +326,12 @@ class EventSource_CombineTests: XCTestCase {
     }.waitForAll().updates
     
     XCTAssert(updates.map { "\($0)" }.elementsEqual(strings))
+    
+    let sum3 = updates.valuesChannel(after: 0.1, interval: 0.1)
+        .foldr(0, +)
+        .waitForAll().updates
+    
+    XCTAssert(sum3.first == updates.reduce(0, +))
   }
     
   func testFlatMapCursor() {

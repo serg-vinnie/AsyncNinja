@@ -7,27 +7,42 @@
 
 import Foundation
 
-public extension EventSource {
+///
+///  Channel
+///
+
+public extension Channel {
     func foldr<Accum>(_ a: Accum, block: @escaping (Accum, Update) -> Future<Accum>) -> Future<Accum> {
-        let promise = Promise<Accum>()
-        var _a = a
-        let exe2 = Executor.serialUnique // access _a only from this executor
-        
-        self.onUpdate(executor: .serialUnique) { element in
-            block(_a, element)
-                .onSuccess(executor: exe2) {
-                  _a = $0
-                }
-                .onFailure(executor: exe2) {
-                  promise.fail($0)
-                }
-        }.onSuccess(executor: exe2) { success in
-            promise.succeed(_a)
+        return promise(executor: .userInteractive) { promise in
+            let (updates, completion) = self.waitForAll()
+            
+            switch completion {
+            case .success(_):
+                promise.complete(updates
+                                    .foldr(a, block: block)
+                                    .wait())
+            case .failure(let error):
+                promise.fail(error)
+            }
         }
-        
-        return promise
+    }
+    
+    func foldr<Accum>(_ a: Accum, _ block: @escaping (Accum, Update) -> Accum) -> Channel<Accum, Success> {
+        return producer(executor: .userInteractive) { producer in
+            let (updates, completion) = self.waitForAll()
+            if updates.count > 0 {
+                producer.update(updates
+                                    .reduce(a, block))
+            }
+            producer.complete(completion)
+        }
     }
 }
+
+///
+///  Cursor
+///
+
 
 private extension Producer where Success == Void {
     func update<Cursor>(element: Element?, completion: Result<Cursor?, Error>) -> Cursor? {
@@ -77,6 +92,10 @@ public func cursor<Cursor,C:ExecutionContext,U>(context: C, cursor: Cursor, bloc
   
   return producer
 }
+
+///
+///  Array
+///
 
 public extension Array {
     func foldr<Accum>(_ a: Accum, block: @escaping (Accum, Element) -> Future<Accum>) -> Future<Accum> {
