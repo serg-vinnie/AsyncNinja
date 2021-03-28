@@ -111,6 +111,16 @@ public extension Array {
         }
     }
     
+    func foldr<Accum>(_ a: Accum, block: @escaping (Accum, Element) -> Accum) -> Future<Accum> {
+        return promise(executor: .userInteractive) { promise in
+            var accum = a
+            for item in self {
+                accum = block(accum, item)
+            }
+            promise.succeed(accum)
+        }
+    }
+    
     func flatMapFuture<T>(block: @escaping (Element) -> Future<T>) -> Channel<T,Void> {
         let producer = Producer<T,Void>()
         
