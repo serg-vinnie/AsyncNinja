@@ -12,7 +12,25 @@ import Foundation
 ///
 
 public extension Channel {
-    func foldr<Accum>(_ a: Accum, block: @escaping (Accum, Update) -> Future<Accum>) -> Future<Accum> {
+    func reduce<Accum>(_ a: Accum, _ block: @escaping (Accum, Update) -> Accum) -> Future<Accum> {
+        return promise(executor: .userInteractive) { promise in
+            let (updates, completion) = self.waitForAll()
+            
+            switch completion {
+            case .success(_):
+                var accum = a
+                for item in updates {
+                    accum = block(accum, item)
+                }
+                promise.succeed(accum)
+            case .failure(let error):
+                promise.fail(error)
+            }
+        }
+    }
+
+    
+    func reduce<Accum>(_ a: Accum, block: @escaping (Accum, Update) -> Future<Accum>) -> Future<Accum> {
         return promise(executor: .userInteractive) { promise in
             let (updates, completion) = self.waitForAll()
             
@@ -108,16 +126,6 @@ public extension Array {
                     }
             }
             promise.succeed(_a)
-        }
-    }
-    
-    func foldr<Accum>(_ a: Accum, block: @escaping (Accum, Element) -> Accum) -> Future<Accum> {
-        return promise(executor: .userInteractive) { promise in
-            var accum = a
-            for item in self {
-                accum = block(accum, item)
-            }
-            promise.succeed(accum)
         }
     }
     
