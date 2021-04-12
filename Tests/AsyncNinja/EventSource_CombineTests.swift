@@ -316,7 +316,7 @@ class EventSource_CombineTests: XCTestCase {
     XCTAssert(sum == updates.reduce(0, +))
     
     let sum2 = updates
-        .foldr(0) { acc, item in future(success: acc + item) }
+        .reduce(0) { acc, item in future(success: acc + item) }
         .wait().maybeSuccess!
     
     XCTAssert(sum2 == updates.reduce(0, +))
