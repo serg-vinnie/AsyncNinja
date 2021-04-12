@@ -214,6 +214,58 @@ public extension EventSource {
     /// - Parameters:
     ///   - context: `ExectionContext` to apply transformation in
     ///   - catch: Error property on the context
+    ///   - transform: to apply. Sequence returned from transform
+    ///     will be treated as multiple period values
+    ///   - strongContext: context restored from weak reference to specified context
+    ///   - update: `Update` to transform
+    /// - Returns: transformed channel
+    func flatMap<F: Completing, C: ExecutionContext>(
+      context: C,
+      `catch` errorKeyPath: ReferenceWritableKeyPath<C, Error?>,
+      _ transform: @escaping (_ strongContext: C, _ update: Update) -> F
+    ) -> Channel<F.Success, Success> {
+      // Test: EventSource_MapTests.testFlatMapArrayContextual
+
+      traceID?._asyncNinja_log("apply flatMapping")
+        
+      return makeProducer(
+        context: context,
+        executor: .serialUnique,
+        pure: true,
+        cancellationToken: nil,
+        bufferSize: .default,
+        traceID: traceID?.appending("∙flatMapp")
+      ) { (context, event, producer, originalExecutor) in
+        switch event {
+        case .update(let update):
+          producer.value?.traceID?._asyncNinja_log("flatMapping update \(update)")
+            
+          switch transform(context, update).wait() {
+          case .success(let success):
+            producer.value?.update(success, from: originalExecutor)
+          case .failure(let error):
+            producer.value?.fail(error)
+          }
+          
+          //
+          
+        case .completion(let completion):
+            producer.value?.traceID?._asyncNinja_log("completion with \(completion)")
+              
+          switch completion {
+          case .success(let success):
+              producer.value?.succeed(success)
+          case .failure(let error):
+              context[keyPath: errorKeyPath] = error
+          }
+        }
+      }
+    }
+    /// Applies transformation to update values of the channel.
+    ///
+    /// - Parameters:
+    ///   - context: `ExectionContext` to apply transformation in
+    ///   - catch: Error property on the context
     ///   - executor: override of `ExecutionContext`s executor.
     ///     Keep default value of the argument unless you need
     ///     to override an executor provided by the context
@@ -451,6 +503,42 @@ public extension EventSource {
       }
     }
   }
+  
+  /// Applies transformation to update values of the channel.
+  ///
+  /// - Parameters:
+  ///   - transform: to apply. Sequence returned from transform
+  /// - Returns: transformed channel
+  func flatMap<C: Completing>(
+    _ transform: @escaping (_ update: Update) -> C
+  ) -> Channel<C.Success, Success> {
+    // Test: EventSource_MapTests.testFlatMapArray
+
+    return makeProducer(
+      executor: .serialUnique,
+      pure: true,
+      cancellationToken: nil,
+      bufferSize: .default,
+      traceID: traceID?.appending("∙flatMapp")
+    ) { (event, producer, originalExecutor) in
+      switch event {
+      case .update(let update):
+        producer.value?.traceID?._asyncNinja_log("flatMapping from \(update)")
+        
+        switch transform(update).wait() {
+        case .success(let success):
+          producer.value?.update(success, from: originalExecutor)
+        case .failure(let error):
+          producer.value?.fail(error)
+        }
+        
+      case .completion(let completion):
+        producer.value?.traceID?._asyncNinja_log("completion with \(completion)")
+        producer.value?.complete(completion, from: originalExecutor)
+      }
+    }
+  }
+
 }
 
 // MARK: - map completion
