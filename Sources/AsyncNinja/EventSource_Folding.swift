@@ -129,35 +129,5 @@ public extension Array {
         }
     }
     
-    func flatMapFuture<T>(block: @escaping (Element) -> Future<T>) -> Channel<T,Void> {
-        let producer = Producer<T,Void>()
-        
-        Executor.userInteractive.schedule { executor in
-            for item in self {
-                switch block(item).wait() {
-                case .success(let s):   producer.update(s)
-                case .failure(let err): producer.fail(err)
-                }
-            }
-            producer.succeed(())
-        }
-        
-        return producer
-    }
-    
-    func flatMapFuture<T,C:ExecutionContext>(context: C, block: @escaping (C, Element) -> Future<T>) -> Channel<T,Void> {
-        let producer = Producer<T,Void>()
-        
-        Executor.userInteractive.schedule { executor in
-            for item in self {
-                switch block(context,item).wait() {
-                case .success(let s):   producer.update(s)
-                case .failure(let err): producer.fail(err)
-                }
-            }
-            producer.succeed(())
-        }
-        
-        return producer
-    }
+
 }

@@ -8,27 +8,59 @@
 import Foundation
 
 class ArrayWrapper<T> {
-    var array : [T]
-    init(_ reserve: Int) {
-        array = [T]()
-        array.reserveCapacity(reserve)
-    }
-
-    static func += (left: ArrayWrapper<T>, right: T) -> ArrayWrapper<T> {
-        left.array.append(right)
-        return left
-    }
-    
-    static func += (left: ArrayWrapper<T>, right: [T]) -> ArrayWrapper<T> {
-        left.array.append(contentsOf: right)
-        return left
-    }
+  var array : [T]
+  init(_ reserve: Int) {
+    array = [T]()
+    array.reserveCapacity(reserve)
+  }
+  
+  static func += (left: ArrayWrapper<T>, right: T) -> ArrayWrapper<T> {
+    left.array.append(right)
+    return left
+  }
+  
+  static func += (left: ArrayWrapper<T>, right: [T]) -> ArrayWrapper<T> {
+    left.array.append(contentsOf: right)
+    return left
+  }
 }
 
 public extension Array {
-    func aggregateFuture<Value>() -> Future<[Value]> where Element == Future<Value>{
-        self.flatMapFuture { $0 }
-            .reduce( ArrayWrapper(self.count), += )
-            .map(executor: .immediate) { $0.array }
+  func flatMap<T>(block: @escaping (Element) -> Future<T>) -> Channel<T,Void> {
+    let producer = Producer<T,Void>()
+    
+    Executor.userInteractive.schedule { executor in
+      for item in self {
+        switch block(item).wait() {
+        case .success(let s):   producer.update(s)
+        case .failure(let err): producer.fail(err)
+        }
+      }
+      producer.succeed(())
     }
+    
+    return producer
+  }
+  
+  func flatMap<T,C:ExecutionContext>(context: C, block: @escaping (C, Element) -> Future<T>) -> Channel<T,Void> {
+    let producer = Producer<T,Void>()
+    
+    Executor.userInteractive.schedule { executor in
+      for item in self {
+        switch block(context,item).wait() {
+        case .success(let s):   producer.update(s)
+        case .failure(let err): producer.fail(err)
+        }
+      }
+      producer.succeed(())
+    }
+    
+    return producer
+  }
+  
+  func aggregateFuture<Value>() -> Future<[Value]> where Element == Future<Value>{
+    self.flatMap { $0 }
+      .reduce( ArrayWrapper(self.count), += )
+      .map(executor: .immediate) { $0.array }
+  }
 }
