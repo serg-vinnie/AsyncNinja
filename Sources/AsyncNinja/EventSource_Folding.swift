@@ -115,19 +115,3 @@ public func cursor<Cursor,C:ExecutionContext,U>(context: C, cursor: Cursor, bloc
 ///  Array
 ///
 
-public extension Array {
-    func reduce<Accum>(_ a: Accum, block: @escaping (Accum, Element) -> Future<Accum>) -> Future<Accum> {
-        return promise(executor: .userInteractive) { promise in
-            var _a = a
-            for item in self {
-                    switch block(_a, item).wait() {
-                    case .success(let s):   _a = s
-                    case .failure(let err): promise.fail(err)
-                    }
-            }
-            promise.succeed(_a)
-        }
-    }
-    
-
-}
