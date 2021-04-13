@@ -219,11 +219,11 @@ public extension EventSource {
     ///   - strongContext: context restored from weak reference to specified context
     ///   - update: `Update` to transform
     /// - Returns: transformed channel
-    func flatMap<F: Completing, C: ExecutionContext>(
+    func flatMap<FC, C: ExecutionContext>(
       context: C,
-      `catch` errorKeyPath: ReferenceWritableKeyPath<C, Error?>,
-      _ transform: @escaping (_ strongContext: C, _ update: Update) -> F
-    ) -> Channel<F.Success, Success> {
+      `catch` errorKeyPath: ReferenceWritableKeyPath<C, Error?>? = nil,
+      _ transform: @escaping (_ strongContext: C, _ update: Update) -> Future<FC>
+    ) -> Channel<FC, Success> {
       // Test: EventSource_MapTests.testFlatMapArrayContextual
 
       traceID?._asyncNinja_log("apply flatMapping")
@@ -256,7 +256,11 @@ public extension EventSource {
           case .success(let success):
               producer.value?.succeed(success)
           case .failure(let error):
-              context[keyPath: errorKeyPath] = error
+            if let path = errorKeyPath {
+              context[keyPath: path] = error
+            } else {
+              producer.value?.fail(error)
+            }
           }
         }
       }
@@ -282,7 +286,7 @@ public extension EventSource {
     /// - Returns: transformed channel
     func flatMap<ES: EventSource, C: ExecutionContext>(
       context: C,
-      `catch` errorKeyPath: ReferenceWritableKeyPath<C, Error?>,
+      `catch` errorKeyPath: ReferenceWritableKeyPath<C, Error?>? = nil,
       executor: Executor? = .serialUnique, // temp solution for flatMap bcs 1. conqurent executor will cause loss of updates bug 2. serial executre can cause deadlock
       pure: Bool = true,
       cancellationToken: CancellationToken? = nil,
@@ -313,7 +317,11 @@ public extension EventSource {
           case .success(let success):
               producer.value?.succeed(success)
           case .failure(let error):
-              context[keyPath: errorKeyPath] = error
+            if let path = errorKeyPath {
+              context[keyPath: path] = error
+            } else {
+              producer.value?.fail(error)
+            }
           }
         }
       }
