@@ -323,7 +323,7 @@ class EventSource_CombineTests: XCTestCase {
     
     let strings = updates.flatMap { u in
         future(success: "\(u)")
-    }.waitForAll().updates
+    }.wait().maybeSuccess!
     
     XCTAssert(updates.map { "\($0)" }.elementsEqual(strings))
     

@@ -27,12 +27,12 @@ public extension Array {
 
     func flatMap<T>(_ exe: Execution = .concurent(), _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         switch exe {
-        case .concurent: return flatMapConcurent(block)
+        case .concurent(let c): return flatMap(concurrency:c, block)
         case .sequential: return flatMapSequential(block: block)
         }
     }
     
-    private func flatMapConcurent<T>(_ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+    private func flatMap<T>(concurrency: Concurrency, _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         return promise(executor: .userInteractive) { promise in
             let _locking = makeLocking()
             var _idx = 0

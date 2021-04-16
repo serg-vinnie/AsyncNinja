@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -23,6 +23,10 @@
 
 /* Begin PBXBuildFile section */
 		E62778AE2629BC9D001A3A4F /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62778AD2629BC9D001A3A4F /* Concurrency.swift */; };
+		E62779002629CD2F001A3A4F /* Essentials in Frameworks */ = {isa = PBXBuildFile; productRef = E62778FF2629CD2F001A3A4F /* Essentials */; };
+		E62779022629CD2F001A3A4F /* Essentials in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E62778FF2629CD2F001A3A4F /* Essentials */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		E62779262629E14F001A3A4F /* Essentials in Frameworks */ = {isa = PBXBuildFile; productRef = E62779252629E14F001A3A4F /* Essentials */; };
+		E62779272629E14F001A3A4F /* Essentials in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E62779252629E14F001A3A4F /* Essentials */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E652E6B22620D68C00D98AEF /* Array+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652E6B12620D68C00D98AEF /* Array+Future.swift */; };
 		E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B509202607E0B700200979 /* EventSource_Folding.swift */; };
 		OBJ_148 /* BaseProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* BaseProducer.swift */; };
@@ -203,6 +207,41 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E62778BA2629CA31001A3A4F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E62779272629E14F001A3A4F /* Essentials in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E62778E22629CCC5001A3A4F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E62779012629CD2F001A3A4F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E62779022629CD2F001A3A4F /* Essentials in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		"AsyncNinja::AsyncNinja::Product" /* AsyncNinja.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AsyncNinja.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::AsyncNinjaReactiveUI::Product" /* AsyncNinjaReactiveUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AsyncNinjaReactiveUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -343,6 +382,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				E62779262629E14F001A3A4F /* Essentials in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +408,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_294 /* AsyncNinja.framework in Frameworks */,
+				E62779002629CD2F001A3A4F /* Essentials in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +424,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E62778DE2629CCC5001A3A4F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		OBJ_124 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,6 +463,7 @@
 				OBJ_140 /* CONTRIBUTING.md */,
 				OBJ_141 /* _config.yml */,
 				OBJ_142 /* NinjaCat.png */,
+				E62778DE2629CCC5001A3A4F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -599,12 +648,16 @@
 			buildPhases = (
 				OBJ_147 /* Sources */,
 				OBJ_218 /* Frameworks */,
+				E62778BA2629CA31001A3A4F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = AsyncNinja;
+			packageProductDependencies = (
+				E62779252629E14F001A3A4F /* Essentials */,
+			);
 			productName = AsyncNinja;
 			productReference = "AsyncNinja::AsyncNinja::Product" /* AsyncNinja.framework */;
 			productType = "com.apple.product-type.framework";
@@ -650,6 +703,7 @@
 			buildPhases = (
 				OBJ_262 /* Sources */,
 				OBJ_293 /* Frameworks */,
+				E62779012629CD2F001A3A4F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -657,6 +711,9 @@
 				OBJ_295 /* PBXTargetDependency */,
 			);
 			name = AsyncNinjaTests;
+			packageProductDependencies = (
+				E62778FF2629CD2F001A3A4F /* Essentials */,
+			);
 			productName = AsyncNinjaTests;
 			productReference = "AsyncNinja::AsyncNinjaTests::Product" /* AsyncNinjaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -667,6 +724,7 @@
 			buildPhases = (
 				OBJ_300 /* Sources */,
 				OBJ_302 /* Frameworks */,
+				E62778E22629CCC5001A3A4F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -675,6 +733,8 @@
 				OBJ_306 /* PBXTargetDependency */,
 			);
 			name = ImportingTestExecutable;
+			packageProductDependencies = (
+			);
 			productName = ImportingTestExecutable;
 			productReference = "AsyncNinja::ImportingTestExecutable::Product" /* ImportingTestExecutable */;
 			productType = "com.apple.product-type.tool";
@@ -721,6 +781,9 @@
 				en,
 			);
 			mainGroup = OBJ_5;
+			packageReferences = (
+				E62778B62629CA31001A3A4F /* XCRemoteSwiftPackageReference "essentials" */,
+			);
 			productRefGroup = OBJ_124 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -954,7 +1017,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinja_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -986,7 +1052,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinja_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1057,7 +1126,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinjaReactiveUI_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1089,7 +1161,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinjaReactiveUI_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1119,7 +1194,11 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinjaReactiveUITests_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1144,7 +1223,11 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinjaReactiveUITests_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1169,7 +1252,11 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinjaTests_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1194,7 +1281,11 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/AsyncNinjaTests_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1217,7 +1308,11 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/ImportingTestExecutable_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+					"@executable_path",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1242,7 +1337,11 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AsyncNinja.xcodeproj/ImportingTestExecutable_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+					"@executable_path",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1303,7 +1402,8 @@
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
@@ -1384,6 +1484,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E62778B62629CA31001A3A4F /* XCRemoteSwiftPackageReference "essentials" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@gitlab.com:sergiy.vynnychenko/essentials.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E62778FF2629CD2F001A3A4F /* Essentials */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E62778B62629CA31001A3A4F /* XCRemoteSwiftPackageReference "essentials" */;
+			productName = Essentials;
+		};
+		E62779252629E14F001A3A4F /* Essentials */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E62778B62629CA31001A3A4F /* XCRemoteSwiftPackageReference "essentials" */;
+			productName = Essentials;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = OBJ_1 /* Project object */;
 }
