@@ -11,8 +11,14 @@ public func future<T>(result: Result<T,Error>) -> Future<T> {
     future(value: result)
 }
 
+public enum Concurrency {
+    case unrestricted
+    case restricted(Int)
+    case auto
+}
+
 public enum Execution {
-    case concurent
+    case concurent(Concurrency = .auto)
     case sequential
 }
 
@@ -30,7 +36,7 @@ public extension Array {
         }
     }
 
-    func flatMap<T>(_ exe: Execution = .concurent, _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+    func flatMap<T>(_ exe: Execution = .concurent(), _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         switch exe {
         case .concurent: return flatMapConcurent(block)
         case .sequential: return flatMapSequential(block: block)
@@ -121,6 +127,7 @@ public extension Array {
         return producer
     }
     
+    // delete this function
     func aggregateFuture<Value>() -> Future<[Value]> where Element == Future<Value>{
         self.flatMapSequential { $0 }
     }
