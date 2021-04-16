@@ -29,10 +29,7 @@ public extension Array {
             promise.succeed(_a)
         }
     }
-}
 
-
-public extension Array {
     func flatMap<T>(_ exe: Execution = .concurent, _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         switch exe {
         case .concurent: return flatMapConcurent(block)
@@ -40,7 +37,7 @@ public extension Array {
         }
     }
     
-    func flatMapConcurent<T>(_ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+    private func flatMapConcurent<T>(_ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         return promise(executor: .userInteractive) { promise in
             let _locking = makeLocking()
             var _idx = 0
@@ -72,9 +69,9 @@ public extension Array {
         }
     }
     
-    func flatMapSequential<T>(block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+    private func flatMapSequential<T>(block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         self.reduce(ArrayWrapper(self.count)) { a, e in
-            block(e).map { a+=$0 }
+            block(e).map { a += $0 }
         }
         .map { $0.array }
     }
@@ -95,7 +92,7 @@ public extension Array {
 //        return producer
 //    }
     
-    func flatMapCh<T,C:ExecutionContext>(
+    func flatMapToChannel<T,C:ExecutionContext>(
         context: C,
         `catch` errorKeyPath: ReferenceWritableKeyPath<C, Error?>? = nil,
         block: @escaping (C, Element) -> Future<T>) -> Channel<T,Void>
