@@ -11,17 +11,6 @@ public func future<T>(result: Result<T,Error>) -> Future<T> {
     future(value: result)
 }
 
-public enum Concurrency {
-    case unrestricted
-    case restricted(Int)
-    case auto
-}
-
-public enum Execution {
-    case concurent(Concurrency = .auto)
-    case sequential
-}
-
 public extension Array {
     func reduce<A>(_ a: A, _ block: @escaping (A, Element) -> Future<A>) -> Future<A> {
         return promise(executor: .userInteractive) { promise in

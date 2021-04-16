@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		E62778AE2629BC9D001A3A4F /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62778AD2629BC9D001A3A4F /* Concurrency.swift */; };
 		E652E6B22620D68C00D98AEF /* Array+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652E6B12620D68C00D98AEF /* Array+Future.swift */; };
 		E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B509202607E0B700200979 /* EventSource_Folding.swift */; };
 		OBJ_148 /* BaseProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* BaseProducer.swift */; };
@@ -208,6 +209,7 @@
 		"AsyncNinja::AsyncNinjaReactiveUITests::Product" /* AsyncNinjaReactiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AsyncNinjaReactiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::AsyncNinjaTests::Product" /* AsyncNinjaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AsyncNinjaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::ImportingTestExecutable::Product" /* ImportingTestExecutable */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = ImportingTestExecutable; sourceTree = BUILT_PRODUCTS_DIR; };
+		E62778AD2629BC9D001A3A4F /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
 		E652E6B12620D68C00D98AEF /* Array+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Future.swift"; sourceTree = "<group>"; };
 		E6B509202607E0B700200979 /* EventSource_Folding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSource_Folding.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 				OBJ_77 /* macOS.swift */,
 				OBJ_78 /* watchOS.swift */,
 				E652E6B12620D68C00D98AEF /* Array+Future.swift */,
+				E62778AD2629BC9D001A3A4F /* Concurrency.swift */,
 			);
 			name = AsyncNinja;
 			path = Sources/AsyncNinja;
@@ -753,6 +756,7 @@
 				OBJ_160 /* Dispatch_Extensions.swift in Sources */,
 				OBJ_161 /* DynamicProperty.swift in Sources */,
 				OBJ_162 /* Either.swift in Sources */,
+				E62778AE2629BC9D001A3A4F /* Concurrency.swift in Sources */,
 				OBJ_163 /* EventSource_Combine.swift in Sources */,
 				OBJ_164 /* EventSource_CombineLatests.swift in Sources */,
 				OBJ_165 /* EventSource_Concat.swift in Sources */,
