@@ -22,7 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		E652E6B22620D68C00D98AEF /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652E6B12620D68C00D98AEF /* Array.swift */; };
+		E652E6B22620D68C00D98AEF /* Array+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652E6B12620D68C00D98AEF /* Array+Future.swift */; };
 		E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B509202607E0B700200979 /* EventSource_Folding.swift */; };
 		OBJ_148 /* BaseProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* BaseProducer.swift */; };
 		OBJ_149 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Box.swift */; };
@@ -208,7 +208,7 @@
 		"AsyncNinja::AsyncNinjaReactiveUITests::Product" /* AsyncNinjaReactiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AsyncNinjaReactiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::AsyncNinjaTests::Product" /* AsyncNinjaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AsyncNinjaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AsyncNinja::ImportingTestExecutable::Product" /* ImportingTestExecutable */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = ImportingTestExecutable; sourceTree = BUILT_PRODUCTS_DIR; };
-		E652E6B12620D68C00D98AEF /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		E652E6B12620D68C00D98AEF /* Array+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Future.swift"; sourceTree = "<group>"; };
 		E6B509202607E0B700200979 /* EventSource_Folding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSource_Folding.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		OBJ_100 /* EitherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherTests.swift; sourceTree = "<group>"; };
@@ -512,7 +512,7 @@
 				OBJ_76 /* appleOS_URLSession.swift */,
 				OBJ_77 /* macOS.swift */,
 				OBJ_78 /* watchOS.swift */,
-				E652E6B12620D68C00D98AEF /* Array.swift */,
+				E652E6B12620D68C00D98AEF /* Array+Future.swift */,
 			);
 			name = AsyncNinja;
 			path = Sources/AsyncNinja;
@@ -783,7 +783,7 @@
 				OBJ_190 /* Producer.swift in Sources */,
 				OBJ_191 /* ProducerProxy.swift in Sources */,
 				OBJ_192 /* Producer_makers.swift in Sources */,
-				E652E6B22620D68C00D98AEF /* Array.swift in Sources */,
+				E652E6B22620D68C00D98AEF /* Array+Future.swift in Sources */,
 				OBJ_193 /* Promise.swift in Sources */,
 				OBJ_194 /* Promise_makers.swift in Sources */,
 				OBJ_195 /* PropertyWrappers.swift in Sources */,
