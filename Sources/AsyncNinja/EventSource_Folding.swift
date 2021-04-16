@@ -37,7 +37,7 @@ public extension Channel {
             switch completion {
             case .success(_):
                 promise.complete(updates
-                                    .reduce(a, block: block)
+                                    .reduce(a, block)
                                     .wait())
             case .failure(let error):
                 promise.fail(error)
