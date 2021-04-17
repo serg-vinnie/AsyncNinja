@@ -540,9 +540,23 @@ class FutureTests: XCTestCase {
     
     XCTAssert(totalInterval < operationInterval * 1.5)
     
-    let c = Concurrency.auto
+  }
+  
+  func testArrayFlatMapConcurent2() {
+    let operationInterval = 0.2
+    let expectation = self.expectation(description: "completion of the flatMap")
+    let c = Concurrency.restricted(2)
+    
+    ["1", "2", "3", "4"]
+      .flatMap(.concurent(c)) { $0.asInt(sleepFor: operationInterval) }
+      .onSuccess(executor: .main) {
+        XCTAssert( Set($0) == Set([1,2,3,4]) )
+        expectation.fulfill()
+      }
     
     print("max threads", c.maxThreads())
+    
+    waitForExpectations(timeout: 0.5))
   }
 }
 

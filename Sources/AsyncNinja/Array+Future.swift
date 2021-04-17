@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 public func future<T>(result: @escaping () -> Result<T,Error>) -> Future<T> {
     promise(executor: .userInteractive) { promise in
         promise.complete(result())
@@ -35,6 +36,12 @@ public extension Array {
     }
     
     private func flatMap<T>(concurrency: Concurrency, _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+        return self.chunked(into: concurrency.maxThreads())
+            .flatMapConcurent { elements in elements.flatMapSequential(block: block) }
+            .map { $0.flatMap { $0 } }
+    }
+    
+    private func flatMapConcurent<T>(_ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         return promise(executor: .userInteractive) { promise in
             let _locking = makeLocking()
             var _idx = 0
