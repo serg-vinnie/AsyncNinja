@@ -7,8 +7,10 @@
 
 import Foundation
 
-public func future<T>(result: Result<T,Error>) -> Future<T> {
-    future(value: result)
+public func future<T>(result: @escaping () -> Result<T,Error>) -> Future<T> {
+    promise(executor: .userInteractive) { promise in
+        promise.complete(result())
+    }
 }
 
 public extension Array {
