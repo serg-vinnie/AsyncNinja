@@ -135,39 +135,6 @@ public extension Fallible {
   /// - Parameters:
   ///   - transform: block to apply.
   ///     A success value returned from block will be a success value of the transformed Fallible.
-  ///     An error thrown from block will be a failure value of a transformed Fallible
-  ///     **This block will not be executed if an original Fallible contains a failure.**
-  ///     **That failure will become a failure value of a transfomed Fallible**
-  ///   - success: success value of original Fallible
-  /// - Returns: transformed Fallible
-  func map<T>(_ transform: (_ success: Success) throws -> T) -> Fallible<T> {
-    return self.flatMap { .success(try transform($0)) }
-  }
-
-  /// Applies transformation to Fallible and flattens nested Fallibles.
-  ///
-  /// - Parameters:
-  ///   - transform: block to apply.
-  ///     A fallible value returned from block will be a value (after flattening) of the transformed Fallible.
-  ///     An error thrown from block will be a failure value of the transformed Fallible.
-  ///     **This block will not be executed if an original Fallible contains a failure.**
-  ///     **That failure will become a failure value of a transfomed Fallible**
-  ///   - success: success value of original Fallible
-  /// - Returns: transformed Fallible
-  func flatMap<T>(_ transform: (_ success: Success) throws -> Fallible<T>) -> Fallible<T> {
-    switch self {
-    case let .success(success):
-      return flatFallible { try transform(success) }
-    case let .failure(failure):
-      return .failure(failure)
-    }
-  }
-
-  /// Applies transformation to Fallible
-  ///
-  /// - Parameters:
-  ///   - transform: block to apply.
-  ///     A success value returned from block will be a success value of the transformed Fallible.
   ///     An error thrown from block will be a failure value of a transformed Fallible.
   ///     **This block will not be executed if an original Fallible contains a success value.**
   ///    **That success value will become a success value of a transfomed Fallible**
@@ -289,12 +256,6 @@ public protocol _Fallible: CustomStringConvertible {
 
   /// executes handler if the fallible containse failure value
   func onFailure(_ handler: (Failure) throws -> Void) rethrows
-
-  /// (success or failure) * (try transform success to success) -> (success or failure)
-  func map<T>(_ transform: (Success) throws -> T) -> Fallible<T>
-
-  /// (success or failure) * (try transform success to (success or failure)) -> (success or failure)
-  func flatMap<T>(_ transform: (Success) throws -> Fallible<T>) -> Fallible<T>
 
   /// (success or failure) * (try transform failure to success) -> (success or failure)
   func tryRecover(_ transform: (Failure) throws -> Success) -> Fallible<Success>
