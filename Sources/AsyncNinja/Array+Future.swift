@@ -124,11 +124,6 @@ public extension Array {
         
         return producer
     }
-    
-    // delete this function
-    func aggregateFuture<Value>() -> Future<[Value]> where Element == Future<Value>{
-        self.flatMapSequential { $0 }
-    }
 }
 
 class ArrayWrapper<T> {
