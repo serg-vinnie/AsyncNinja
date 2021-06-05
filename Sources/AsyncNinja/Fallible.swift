@@ -21,8 +21,10 @@
 //
 
 import Dispatch
+import Essentials
 
-public typealias Fallible<S> = Result<S, Swift.Error>
+
+public typealias Fallible = Essentials.Fallible
 
 // MARK: - Casting
 
@@ -80,28 +82,6 @@ extension Fallible: CustomStringConvertible, CustomDebugStringConvertible {
 
 // MARK: - state managers
 public extension Fallible {
-
-  /// Returns success if Fallible has a success value inside.
-  /// Returns nil otherwise
-  var maybeSuccess: Success? {
-    switch self {
-    case let .success(succes):
-      return succes
-    case .failure:
-      return nil
-    }
-  }
-
-  /// Returns failure if Fallible has a failure value inside.
-  /// Returns nil otherwise
-  var maybeFailure: Failure? {
-    switch self {
-    case .success:
-      return nil
-    case let .failure(failure):
-      return failure
-    }
-  }
 
   /// Executes block if Fallible has success value inside
   ///
