@@ -40,7 +40,7 @@ public extension EventSource {
     deadline: DispatchTime = DispatchTime.now(),
     interval: Double,
     leeway: DispatchTimeInterval? = nil,
-    qos: DispatchQoS.QoSClass = .default,
+    qos: DispatchQoS.QoSClass = .userInteractive,
     cancellationToken: CancellationToken? = nil,
     bufferSize: DerivedChannelBufferSize = .default
     ) -> Channel<Update, Success> {
