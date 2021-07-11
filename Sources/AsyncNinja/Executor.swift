@@ -145,7 +145,7 @@ public extension Executor {
   
     // Test: ExecutorTests.testSerialUnique
   /// generates each time unique serial executor
-  static var serialUnique : Executor { Executor.queue(DispatchQueue(label: UUID().uuidString)) }
+    static var serialUnique : Executor { Executor.queue(DispatchQueue(label: UUID().uuidString, qos: .userInteractive)) }
         
     
 
