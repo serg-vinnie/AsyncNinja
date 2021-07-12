@@ -172,7 +172,7 @@ public extension EventSource {
   ///   - update: `Update` to transform
   /// - Returns: transformed channel
   func map<P>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     cancellationToken: CancellationToken? = nil,
     bufferSize: DerivedChannelBufferSize = .default,
@@ -778,7 +778,7 @@ public extension EventSource {
   ///   - update: `Update` to transform
   /// - Returns: filtered transform
   func filter(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     cancellationToken: CancellationToken? = nil,
     bufferSize: DerivedChannelBufferSize = .default,
