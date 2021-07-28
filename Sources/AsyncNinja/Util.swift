@@ -77,6 +77,22 @@ public enum AsyncNinjaError: Swift.Error, Equatable {
   case networkReachabilityDetectionFailed
 }
 
+extension AsyncNinjaError : LocalizedError {
+    
+    public var errorDescription: String? {
+        switch self {
+        case .cancelled:
+            return ".cancelled"
+        case .contextDeallocated:
+            return ".contextDeallocated"
+        case .dynamicCastFailed:
+            return ".dynamicCastFailed"
+        case .networkReachabilityDetectionFailed:
+            return ".networkReachabilityDetectionFailed"
+        }
+    }
+}
+
 /// Convenience protocol for detection cancellation
 public protocol CancellationRepresentableError: Swift.Error {
 
