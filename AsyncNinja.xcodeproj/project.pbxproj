@@ -465,7 +465,9 @@
 				OBJ_142 /* NinjaCat.png */,
 				E62778DE2629CCC5001A3A4F /* Frameworks */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;

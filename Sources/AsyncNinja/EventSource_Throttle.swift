@@ -77,7 +77,7 @@ public extension EventSource {
 
 private class ThrottleEventSourceHelper<Source: EventSource, Destination: EventDestination>
 where Source.Update == Destination.Update, Source.Success == Destination.Success {
-  var locking = makeLocking()
+  var locking = makeLocking(isFair: true)
   let after: AfterThrottling
   var nextUpdate : Source.Update?
   let queue: DispatchQueue
@@ -100,10 +100,7 @@ where Source.Update == Destination.Update, Source.Success == Destination.Success
   
   func eventHandler(source: Source) -> AnyObject? {
     return source.makeHandler(executor: .immediate) { (event, originalExecutor) in
-      
-      self.locking.lock()
-      defer { self.locking.unlock() }
-      
+            
       switch event {
       case let .completion(completion):   self.onComplete(completion: completion, executor: originalExecutor)
       case let .update(update):           self.onUpdate(update: update)
@@ -138,11 +135,18 @@ where Source.Update == Destination.Update, Source.Success == Destination.Success
 
 extension ThrottleEventSourceHelper {
   private func sendNow(update: Destination.Update) {
+    self.locking.lock()
     nextUpdate = nil
+    self.locking.unlock()
+
+    
     destination?.update(update)
   }
   
   private func createTimer() {
+    self.locking.lock()
+    defer { self.locking.unlock() }
+
     timer = DispatchSource.makeTimerSource(queue: queue)
     timer!.schedule(deadline: DispatchTime.now() + timerInterval)
     timer!.setEventHandler { self.timerHandler() }
@@ -154,7 +158,11 @@ extension ThrottleEventSourceHelper {
       sendNow(update: update)
       createTimer()
     } else {
+      
+      self.locking.lock()
       timer = nil
+      self.locking.unlock()
+      
     }
   }
 }
