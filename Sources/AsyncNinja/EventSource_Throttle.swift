@@ -94,7 +94,8 @@ where Source.Update == Destination.Update, Source.Success == Destination.Success
     
     self.destination = destination
     self.timerInterval = interval.dispatchInterval
-    self.queue = DispatchQueue.global(qos: qos)
+    self.queue = DispatchQueue.init(label: "AsyncNinja.throttle Timer DispatchQueue", qos: .userInteractive)
+    //global(qos: qos)
     self.after = after
   }
   
