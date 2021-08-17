@@ -100,7 +100,7 @@ where Source.Update == Destination.Update, Source.Success == Destination.Success
   }
   
   func eventHandler(source: Source) -> AnyObject? {
-    return source.makeHandler(executor: .immediate) { (event, originalExecutor) in
+    return source.makeHandler(executor: Executor.queue(self.queue)) { (event, originalExecutor) in
             
       switch event {
       case let .completion(completion):   self.onComplete(completion: completion, executor: originalExecutor)
