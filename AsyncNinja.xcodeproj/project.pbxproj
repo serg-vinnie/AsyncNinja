@@ -26,7 +26,6 @@
 		E62779002629CD2F001A3A4F /* Essentials in Frameworks */ = {isa = PBXBuildFile; productRef = E62778FF2629CD2F001A3A4F /* Essentials */; };
 		E62779022629CD2F001A3A4F /* Essentials in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E62778FF2629CD2F001A3A4F /* Essentials */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E62779262629E14F001A3A4F /* Essentials in Frameworks */ = {isa = PBXBuildFile; productRef = E62779252629E14F001A3A4F /* Essentials */; };
-		E62779272629E14F001A3A4F /* Essentials in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E62779252629E14F001A3A4F /* Essentials */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E652E6B22620D68C00D98AEF /* Array+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652E6B12620D68C00D98AEF /* Array+Future.swift */; };
 		E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B509202607E0B700200979 /* EventSource_Folding.swift */; };
 		OBJ_148 /* BaseProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* BaseProducer.swift */; };
@@ -214,7 +213,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E62779272629E14F001A3A4F /* Essentials in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
