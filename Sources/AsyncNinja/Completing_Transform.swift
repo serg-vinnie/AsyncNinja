@@ -28,7 +28,7 @@ extension Completing {
 
   /// **internal use only**
   func _mapCompletion<T>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool,
     _ transform: @escaping (_ completion: Fallible<Success>) throws -> T
     ) -> Promise<T> {
@@ -53,7 +53,7 @@ extension Completing {
 
   /// **internal use only**
   func _flatRecover<T: Completing>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool,
     _ transform: @escaping (_ failure: Swift.Error) throws -> T
     ) -> Promise<Success> where T.Success == Success {
@@ -99,7 +99,7 @@ public extension Completing {
   ///   - completion: of the `Completing`
   /// - Returns: `Future` that will complete with transformed value
   func mapCompletion<T>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ completion: Fallible<Success>) throws -> T
     ) -> Future<T> {
@@ -121,7 +121,7 @@ public extension Completing {
   ///   - completion: of the `Completing`
   /// - Returns: `Future` that will complete with completion of returned `Completing`
   func flatMapCompletion<T: Completing>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ completion: Fallible<Success>) throws -> T
     ) -> Future<T.Success> {
@@ -143,7 +143,7 @@ public extension Completing {
   ///   - completion: of the `Completing`
   /// - Returns: `Channel` that will complete with completion of returned `Completing&Updating`
   func flatMapCompletion<T: Completing&Updating>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ completion: Fallible<Success>) throws -> T
     ) -> Channel<T.Update, T.Success> {
@@ -166,7 +166,7 @@ public extension Completing {
   ///   - success: of the `Completing`
   /// - Returns: `Future` that will complete with transformed value
   func mapSuccess<T>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ success: Success) throws -> T
     ) -> Future<T> {
@@ -196,7 +196,7 @@ public extension Completing {
   ///   - success: of the `Completing`
   /// - Returns: `Future` that will complete with completion of returned `Completing`
   func flatMapSuccess<T: Completing>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ success: Success) throws -> T
     ) -> Future<T.Success> {
@@ -219,7 +219,7 @@ public extension Completing {
   ///   - success: of the `Completing`
   /// - Returns: `Channel` that will complete with completion of returned `Completing&Updating`
   func flatMapSuccess<T: Completing&Updating>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ success: Success) throws -> T
     ) -> Channel<T.Update, T.Success> {
@@ -274,7 +274,7 @@ public extension Completing {
   ///   - failure: of the `Completing`
   /// - Returns: `Future` that will complete with transformed value
   func recover(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ failure: Swift.Error) throws -> Success
     ) -> Future<Success> {
@@ -303,7 +303,7 @@ public extension Completing {
   /// - Returns: `Future` that will complete with transformed value
   func recover<E: Swift.Error>(
     from specificError: E,
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ failure: E) throws -> Success
     ) -> Future<Success> where E: Equatable {
@@ -332,7 +332,7 @@ public extension Completing {
   ///   - failure: of the `Completing`
   /// - Returns: `Future` that will complete with transformed value
   func flatRecover<T: Completing>(
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ failure: Swift.Error) throws -> T
     ) -> Future<Success> where T.Success == Success {
@@ -357,7 +357,7 @@ public extension Completing {
   /// - Returns: `Future` that will complete with transformed value
   func flatRecover<T: Completing, E: Swift.Error>(
     from specificError: E,
-    executor: Executor = .primary,
+    executor: Executor = .immediate,
     pure: Bool = true,
     _ transform: @escaping (_ failure: E) throws -> T
     ) -> Future<Success> where T.Success == Success, E: Equatable {
