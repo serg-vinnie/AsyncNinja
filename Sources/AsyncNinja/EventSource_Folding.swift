@@ -57,8 +57,12 @@ public extension Channel {
     }
 }
 
-extension Array {
-  func foldr<Accum : AdditiveArithmetic>(_ a: Accum, _ block: @escaping (Accum, Element) -> Channel<Accum, Void>) -> Channel<Accum, Void> {
+public protocol Accumulator {
+  static func + (lhs: Self, rhs: Self) -> Self
+}
+
+public extension Array {
+  func foldr<Accum : Accumulator>(_ a: Accum, _ block: @escaping (Accum, Element) -> Channel<Accum, Void>) -> Channel<Accum, Void> {
     return producer(executor: .userInteractive) { producer in
       var accum = a
       let exe : Executor = .serialUnique
