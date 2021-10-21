@@ -57,6 +57,23 @@ public extension Channel {
     }
 }
 
+extension Array {
+  func foldr<Accum : AdditiveArithmetic>(_ a: Accum, _ block: @escaping (Accum, Element) -> Channel<Accum, Void>) -> Channel<Accum, Void> {
+    return producer(executor: .userInteractive) { producer in
+      var accum = a
+      let exe : Executor = .serialUnique
+      for item in self {
+        _ = block(accum, item)
+          .onUpdate(executor: exe) { acc in
+            accum = acc
+            producer.update(accum)
+          }.waitForAll()
+      }
+      producer.succeed(())
+    }
+  }
+}
+
 ///
 ///  Cursor
 ///
