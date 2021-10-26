@@ -29,26 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AsyncNinja::AsyncNinjaTests"
-               BuildableName = "AsyncNinjaTests.xctest"
-               BlueprintName = "AsyncNinjaTests"
-               ReferencedContainer = "container:AsyncNinja.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AsyncNinja::AsyncNinjaReactiveUITests"
-               BuildableName = "AsyncNinjaReactiveUITests.xctest"
-               BlueprintName = "AsyncNinjaReactiveUITests"
-               ReferencedContainer = "container:AsyncNinja.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

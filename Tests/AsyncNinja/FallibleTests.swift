@@ -38,7 +38,7 @@ class FallibleTests: XCTestCase {
     ("testFlattenFailure", testFlattenFailure),
     ("testMapSuccessForSuccess", testMapSuccessForSuccess),
     ("testMapSuccessForFailure", testMapSuccessForFailure),
-    ("testMapSuccessForThrow", testMapSuccessForThrow),
+//    ("testMapSuccessForThrow", testMapSuccessForThrow),
     ("testMapFailureForSuccess", testMapFailureForSuccess),
     ("testMapFailureOnFailure", testMapFailureOnFailure),
     ("testMapFailure2OnSuccess", testMapFailure2OnSuccess),
@@ -137,18 +137,18 @@ class FallibleTests: XCTestCase {
     XCTAssertEqual(numberOfCalls, 0)
   }
 
-  func testMapSuccessForThrow() {
-    let value: Fallible<Int> = .success(2)
-    var numberOfCalls = 0
-
-    let nextValue = value.map { _ -> Int in
-      numberOfCalls += 1
-      throw TestError.testCode
-    }
-
-    XCTAssertEqual(nextValue.maybeFailure as! TestError, TestError.testCode)
-    XCTAssertEqual(numberOfCalls, 1)
-  }
+//  func testMapSuccessForThrow() {
+//    let value: Fallible<Int> = .success(2)
+//    var numberOfCalls = 0
+//
+//    let nextValue = value.map { _ -> Int in
+//      numberOfCalls += 1
+//      throw TestError.testCode
+//    }
+//
+//    XCTAssertEqual(nextValue.maybeFailure as! TestError, TestError.testCode)
+//    XCTAssertEqual(numberOfCalls, 1)
+//  }
 
   func testMapFailureForSuccess() {
     let value: Fallible = .success(2)

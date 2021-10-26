@@ -556,7 +556,7 @@ class FutureTests: XCTestCase {
     
     print("max threads", c.maxThreads())
     
-    waitForExpectations(timeout: 0.5))
+    waitForExpectations(timeout: 0.5)
   }
 }
 

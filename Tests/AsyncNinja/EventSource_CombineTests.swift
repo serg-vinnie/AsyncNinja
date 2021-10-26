@@ -307,32 +307,32 @@ class EventSource_CombineTests: XCTestCase {
     }
   }
   
-  func testFoldr() {
-    let updates = [1, 2, 3]
-    let sum = updates.valuesChannel(after: 0.1, interval: 0.1)
-      .reduce(0) { acc, item in future(success: acc + item) }
-      .wait().maybeSuccess!
-    
-    XCTAssert(sum == updates.reduce(0, +))
-    
-    let sum2 = updates
-        .reduce(0) { acc, item in future(success: acc + item) }
-        .wait().maybeSuccess!
-    
-    XCTAssert(sum2 == updates.reduce(0, +))
-    
-    let strings = updates.flatMap { u in
-        future(success: "\(u)")
-    }.wait().maybeSuccess!
-    
-    XCTAssert(updates.map { "\($0)" }.elementsEqual(strings))
-    
-    let sum3 = updates.valuesChannel(after: 0.1, interval: 0.1)
-        .foldr(0, +)
-        .waitForAll().updates
-    
-    XCTAssert(sum3.first == updates.reduce(0, +))
-  }
+//  func testFoldr() {
+//    let updates = [1, 2, 3]
+//    let sum = updates.valuesChannel(after: 0.1, interval: 0.1)
+//      .reduce(0) { acc, item in future(success: acc + item) }
+//      .wait().maybeSuccess!
+//    
+//    XCTAssert(sum == updates.reduce(0, +))
+//    
+//    let sum2 = updates
+//        .reduce(0) { acc, item in future(success: acc + item) }
+//        .wait().maybeSuccess!
+//    
+//    XCTAssert(sum2 == updates.reduce(0, +))
+//    
+//    let strings = updates.flatMap { u in
+//        future(success: "\(u)")
+//    }.wait().maybeSuccess!
+//    
+//    XCTAssert(updates.map { "\($0)" }.elementsEqual(strings))
+//    
+//    let sum3 = updates.valuesChannel(after: 0.1, interval: 0.1)
+//        .foldr(0, +)
+//        .waitForAll().updates
+//    
+//    XCTAssert(sum3.first == updates.reduce(0, +))
+//  }
     
   func testFlatMapCursor() {
     func cursorFunc(_ i: Int?) -> Channel<Int,Int?> {
