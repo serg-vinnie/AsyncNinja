@@ -62,8 +62,8 @@ public protocol Accumulator {
 }
 
 public extension Array {
-  func foldr<Accum : Accumulator>(_ a: Accum, _ block: @escaping (Accum, Element) -> Channel<Accum, Void>) -> Channel<Accum, Void> {
-    return producer(executor: .userInteractive) { producer in
+  func foldr<Accum : Accumulator>(_ a: Accum, executor: Executor = .userInteractive, _ block: @escaping (Accum, Element) -> Channel<Accum, Void>) -> Channel<Accum, Void> {
+    return producer(executor: executor) { producer in
       var accum = a
       let exe : Executor = .serialUnique
       for item in self {
