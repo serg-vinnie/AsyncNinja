@@ -67,11 +67,15 @@ public extension Array {
       var accum = a
       let exe : Executor = .serialUnique
       for item in self {
-        _ = block(accum, item)
+        let r = block(accum, item)
           .onUpdate(executor: exe) { acc in
             accum = accum + acc
             producer.update(accum)
-          }.waitForAll()
+          }.wait()
+        
+        if case .failure(let error) = r {
+          producer.fail(error)
+        }
       }
       producer.succeed(())
     }
