@@ -312,6 +312,10 @@ public extension EventSource {
     return self
   }
   
+  @discardableResult
+  func assign<T: Retainer>(on obj: T, to keyPath: ReferenceWritableKeyPath<T, Update>, executor: Executor = .main) -> Self {
+    return assign(to: keyPath, on: obj, executor: executor)
+  }
 
 }
 
