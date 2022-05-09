@@ -464,7 +464,7 @@ class iOSTests: appleOSTests {
   }
   
   #if os(iOS)
-  func _testUISlider(_ object: UISlider, state: UIControl.SyncState) {
+  func _testUISlider(_ object: UISlider, state: UIControl.State) {
     testOptionalEventDestination(object.rp.thumbImage(for: state), object: object,
                                  keyPathOrGet: .right({ $0.thumbImage(for: state) }),
                                  values: Fixtures.imagesAndNils)
