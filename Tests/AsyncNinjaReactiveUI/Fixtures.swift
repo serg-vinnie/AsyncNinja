@@ -147,8 +147,8 @@ extension Fixtures {
   static let images: [UIImage] = Fixtures.imagesAndNils.compactMap { $0 }
   static let arraysOfImagesAndNils: [[UIImage]?] = Fixtures.imagesAndNils
     .map { $0.map { [$0] } }
-  static let uiControlStates: [UIControl.State] = {
-    var result: [UIControl.State] = [.normal, .highlighted, .disabled, .selected]
+  static let uiControlStates: [UIControl.SyncState] = {
+    var result: [UIControl.SyncState] = [.normal, .highlighted, .disabled, .selected]
     if #available(iOS 9.0, *) {
       result.append(.focused)
     }
