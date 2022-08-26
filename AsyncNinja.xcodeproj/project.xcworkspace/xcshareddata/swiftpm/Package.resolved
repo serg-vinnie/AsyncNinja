@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "essentials",
+      "kind" : "remoteSourceControl",
+      "location" : "git@gitlab.com:sergiy.vynnychenko/essentials.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e031e36ccadaf41a1a0ee4903ecd77b4a4cf9664"
+      }
+    }
+  ],
+  "version" : 2
+}
