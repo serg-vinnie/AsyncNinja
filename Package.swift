@@ -35,7 +35,7 @@ let package = Package(
     ])
   ],
   dependencies: [
-      .package(url: "https://gitlab.com/sergiy.vynnychenko/essentials.git", branch: "master"),
+      .package(url: "https://gitlab.com/sergiy.vynnychenko/essentials.git", .branch("master") ),
   ],
   targets: [
     .target(
