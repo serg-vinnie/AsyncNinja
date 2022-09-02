@@ -34,9 +34,15 @@ let package = Package(
       "AsyncNinjaReactiveUI"
     ])
   ],
+  dependencies: [
+      .package(url: "git@gitlab.com:sergiy.vynnychenko/essentials.git", branch: "master")
+  ],
   targets: [
     .target(
       name: "AsyncNinja",
+      dependencies: [
+          .product(name: "Essentials", package: "essentials")
+      ],
       path: "Sources/AsyncNinja"
     ),
     .testTarget(
