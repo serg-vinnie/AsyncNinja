@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import os.log
 
 /// Constatns used my AsyncNinja
 /// Values of these constants were carefully considered
@@ -205,11 +206,19 @@ extension String {
 
 private class Logger {
   static func log(id: String, message: String) {
-    print("\(time) AsyncNinja [\(id)]: \(message)")
+    if #available(macOS 10.12, *) {
+      os_log("%{public}@", "\(time) AsyncNinja [\(id)]: \(message)")
+    } else {
+      print("\(time) AsyncNinja [\(id)]: \(message)")
+    }
   }
   
   static func log(title: String, error: Error, thread: Bool = true) {
-    print("\(time) AsyncNinja [\(title) ERROR] \(error.localizedDescription)")
+    if #available(macOS 10.12, *) {
+      os_log("%{public}@", "\(time) AsyncNinja [\(title) ERROR] \(error.localizedDescription)")
+    } else {
+      print("\(time) AsyncNinja [\(title) ERROR] \(error.localizedDescription)")
+    }
   }
   
   private static var time : String { return debugDateFormatter.string(from: Date()) }
