@@ -45,16 +45,17 @@ public extension Channel {
         }
     }
     
-//    func foldr<Accum>(_ a: Accum, _ block: @escaping (Accum, Update) -> Accum) -> Channel<Accum, Success> {
-//        return producer(executor: .userInteractive) { producer in
-//            let (updates, completion) = self.waitForAll()
-//            if updates.count > 0 {
-//                producer.update(updates
-//                                    .reduce(a, block))
-//            }
-//            producer.complete(completion)
-//        }
-//    }
+    func foldr<Accum>(_ a: Accum, _ block: @escaping (Accum, Update) -> Accum) -> Channel<Accum, Success> {
+        return producer(executor: .userInteractive) { producer in
+          var a = a
+          self.onUpdate { upd in
+            a = block(a,upd)
+            producer.update(a)
+          }.onComplete {
+            producer.complete($0)
+          }
+      }
+    }
 }
 
 public protocol Accumulator {
