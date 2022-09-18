@@ -28,18 +28,18 @@ public extension Array {
         }
     }
 
-    func flatMap<T>(_ exe: Execution = .concurent(), _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
-        switch exe {
-        case .concurent(let c): return flatMap(concurrency:c, block)
-        case .sequential: return flatMapSequential(block: block)
-        }
-    }
+//    func flatMap<T>(_ exe: Execution = .concurent(), _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+//        switch exe {
+//        case .concurent(let c): return flatMap(concurrency:c, block)
+//        case .sequential: return flatMapSequential(block: block)
+//        }
+//    }
     
-    private func flatMap<T>(concurrency: Concurrency, _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
-        return self.chunked(into: concurrency.maxThreads())
-            .flatMapConcurent { elements in elements.flatMapSequential(block: block) }
-            .map { $0.flatMap { $0 } }
-    }
+//    private func flatMap<T>(concurrency: Concurrency, _ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
+//        return self.chunked(into: concurrency.maxThreads())
+//            .flatMapConcurent { elements in elements.flatMapSequential(block: block) }
+//            .map { $0.flatMap { $0 } }
+//    }
     
     private func flatMapConcurent<T>(_ block: @escaping (Element) -> Future<T>) -> Future<[T]> {
         return promise(executor: .userInteractive) { promise in
