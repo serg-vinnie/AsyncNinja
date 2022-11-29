@@ -171,9 +171,9 @@ public extension Completing {
   }
   
   @discardableResult
-  func assignSuccess<T:ExecutionContext>(
-    to keyPath: ReferenceWritableKeyPath<T, Success>,
-    on context: T, executor: Executor? = nil
+  func assign<T:ExecutionContext>(
+    on context: T, executor: Executor? = nil,
+    to keyPath: ReferenceWritableKeyPath<T, Success>
   ) -> Self {
     return onComplete(context: context, executor: executor
     ) { (context, completion) in
@@ -183,6 +183,14 @@ public extension Completing {
       default: break
       }
     }
+  }
+  
+  @discardableResult
+  func assignSuccess<T:ExecutionContext>(
+    to keyPath: ReferenceWritableKeyPath<T, Success>,
+    on context: T, executor: Executor? = nil
+  ) -> Self {
+    assign(on: context, to: keyPath)
   }
     
   /// Binds error  to error property of Retainer. The Retainer will release handler
