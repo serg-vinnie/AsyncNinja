@@ -199,7 +199,7 @@ public extension Completing {
   ///   - to: keyPath of property to update
   ///   - on: any Retainer
   ///
-  /// - Example: channel.assign(to: \\.title, on: myView.button)
+  /// - Example: channel.assign(on: myView.button, to: \.title)
   @discardableResult
   func assignError<T:ExecutionContext>(to keyPath: ReferenceWritableKeyPath<T, Error?>, on context: T, executor: Executor = .main) -> Self {
     return onComplete(context: context, executor: executor
@@ -218,7 +218,7 @@ public extension Completing {
   ///   - to: keyPath of property to update
   ///   - on: any Retainer
   ///
-  /// - Example: channel.assign(to: \\.title, on: myView.button)
+  /// - Example: channel.assign(on: myView.button, to: \.title)
   @discardableResult
   func assignErrorString<T: ExecutionContext>(to keyPath: ReferenceWritableKeyPath<T, String>, on context: T, executor: Executor = .main) -> Self {
     return onComplete(context: context, executor: executor

@@ -295,23 +295,7 @@ public extension EventSource {
   ///   - to: keyPath of property to update
   ///   - on: any Retainer
   ///
-  /// - Example: channel.assign(to: \\.title, on: myView.button)
-  @discardableResult
-  @available(*, deprecated, renamed: "assign(on:to:executor:)" )
-  func assign<T: Retainer>(to keyPath: ReferenceWritableKeyPath<T, Update>, on obj: T, executor: Executor = .main) -> Self {
-    let handler = makeHandler(executor: executor) { [weak obj] event, originalExecutor  in
-      guard let obj = obj else { return }
-      switch event {
-      case .update(let update):
-        obj[keyPath: keyPath] = update
-      default:break
-      }
-    }
-    if let handler = handler {
-      obj.releaseOnDeinit(handler)
-    }
-    return self
-  }
+  /// - Example: channel.assign(on: myView.button, to: \.title)
   
   @discardableResult
   func assign<T: Retainer>(on obj: T, to keyPath: ReferenceWritableKeyPath<T, Update>, executor: Executor = .main) -> Self {
