@@ -303,7 +303,9 @@ public extension EventSource {
       guard let obj = obj else { return }
       switch event {
       case .update(let update):
-        obj[keyPath: keyPath] = update
+        originalExecutor.execute(from: nil) { _ in
+          obj[keyPath: keyPath] = update
+        }
       default:break
       }
     }
