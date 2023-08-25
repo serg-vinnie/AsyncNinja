@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// ProducerProxy acts like a producer but is actually a proxy for some operation, e.g. setting and oberving property
 public class ProducerProxy<Update, Success>: BaseProducer<Update, Success> {

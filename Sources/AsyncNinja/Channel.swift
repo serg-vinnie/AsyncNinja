@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// represents values that updateally arrive followed by failure
 /// of completion that completes Channel. Channel oftenly represents result

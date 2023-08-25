@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// Future is a proxy of value that will be available at some point in the future.
 public class Future<S>: Completing {

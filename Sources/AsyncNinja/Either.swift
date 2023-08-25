@@ -20,6 +20,8 @@
 //  IN THE SOFTWARE.
 //
 
+import Essentials
+
 /// Simple implementation of either monad
 public enum Either<Left, Right> {
 

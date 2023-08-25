@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 extension EventSource {
   /// **internal use only**

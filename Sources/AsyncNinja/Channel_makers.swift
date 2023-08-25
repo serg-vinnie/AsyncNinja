@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// Convenience constructor of Channel. Encapsulates cancellation and producer creation.
 public func channel<Update, Success>(

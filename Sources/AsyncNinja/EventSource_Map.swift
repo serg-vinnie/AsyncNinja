@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 // MARK: - whole channel transformations
 public extension EventSource {

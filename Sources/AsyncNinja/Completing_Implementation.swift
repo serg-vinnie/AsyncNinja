@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 public extension Completing {
 

@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// Mutable subclass of channel
 /// You can update and complete producer manually

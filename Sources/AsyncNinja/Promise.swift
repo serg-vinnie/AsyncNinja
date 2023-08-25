@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// Promise is a future that may be manually completed by owner
 final public class Promise<Success>: Future<Success>, Completable, CachableCompletable {

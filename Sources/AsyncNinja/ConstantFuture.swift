@@ -21,6 +21,7 @@
 //
 
 import Dispatch
+import Essentials
 
 /// A future that has been initialized as completed
 final class ConstantFuture<Success>: Future<Success> {
