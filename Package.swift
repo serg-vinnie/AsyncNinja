@@ -34,7 +34,11 @@ let package = Package(
     .library(name: "AsyncNinja", targets: [
       "AsyncNinja",
       "AsyncNinjaReactiveUI"
-    ])
+    ]),
+    .library(
+        name: "NinjaMacros",
+        targets: ["NinjaMacros"]
+    ),
   ],
   dependencies: [
       .package(url: "https://gitlab.com/sergiy.vynnychenko/essentials.git", branch: "master" ),
