@@ -8,6 +8,7 @@ import NinjaMacros
 
 let testMacros: [String: Macro.Type] = [
     "ninjaModel": NinjaModelMacro.self,
+    "demoMacro" : DemoMacro.self
 ]
 #endif
 
@@ -28,6 +29,32 @@ final class boilerplateTests: XCTestCase {
                             
                             extension Test: ExecutionContext, ReleasePoolOwner, ObservableObject {
                             }
+                            """,
+            macros: testMacros
+        )
+#else
+        throw XCTSkip("macros are only supported when running tests for the host platform")
+#endif
+    }
+    
+    func testDemo() throws {
+        let classDeclaration =  """
+                                class Test {
+                                }
+                                """
+        
+        let targetDeclaration = """
+                                class Test2 {
+                                }
+                                """
+        
+#if canImport(NinjaMacros)
+        assertMacroExpansion(
+            "@demoMacro\n\(classDeclaration)",
+            expandedSource: """
+                            \(classDeclaration)
+                            
+                            \(targetDeclaration)
                             """,
             macros: testMacros
         )

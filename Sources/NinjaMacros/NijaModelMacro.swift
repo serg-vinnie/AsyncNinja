@@ -34,5 +34,6 @@ public struct NinjaModelMacro: ExtensionMacro, MemberMacro {
 struct boilerplatePlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         NinjaModelMacro.self,
+        DemoMacro.self,
     ]
 }

@@ -246,6 +246,7 @@
 		E62778AD2629BC9D001A3A4F /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
 		E652E6B12620D68C00D98AEF /* Array+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Future.swift"; sourceTree = "<group>"; };
 		E6B509202607E0B700200979 /* EventSource_Folding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSource_Folding.swift; sourceTree = "<group>"; };
+		E6F61F2E2B4368EC00FCF02A /* NijaModelMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NijaModelMacro.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		OBJ_100 /* EitherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherTests.swift; sourceTree = "<group>"; };
 		OBJ_101 /* EventSource_CombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSource_CombineTests.swift; sourceTree = "<group>"; };
@@ -428,6 +429,7 @@
 		E6F61F2A2B435E4400FCF02A /* NinjaMacros */ = {
 			isa = PBXGroup;
 			children = (
+				E6F61F2E2B4368EC00FCF02A /* NijaModelMacro.swift */,
 			);
 			name = NinjaMacros;
 			path = Sources/NinjaMacros;
