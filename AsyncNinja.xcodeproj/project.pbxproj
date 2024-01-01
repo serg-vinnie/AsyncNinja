@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -425,6 +425,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E6F61F2A2B435E4400FCF02A /* NinjaMacros */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NinjaMacros;
+			sourceTree = "<group>";
+		};
 		OBJ_124 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -466,6 +473,7 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E6F61F2A2B435E4400FCF02A /* NinjaMacros */,
 				OBJ_8 /* AsyncNinja */,
 				OBJ_79 /* AsyncNinjaReactiveUI */,
 				OBJ_84 /* ImportingTestExecutable */,

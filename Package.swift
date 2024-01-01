@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.9
 //
 //  Copyright (c) 2016-2020 Anton Mironov
 //
@@ -22,9 +22,11 @@
 //
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
   name: "AsyncNinja",
+  platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
   products: [
     .executable(name: "ImportingTestExecutable", targets: [
       "ImportingTestExecutable"
@@ -35,9 +37,17 @@ let package = Package(
     ])
   ],
   dependencies: [
-      .package(url: "https://gitlab.com/sergiy.vynnychenko/essentials.git", .branch("master") ),
+      .package(url: "https://gitlab.com/sergiy.vynnychenko/essentials.git", branch: "master" ),
+      .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
   ],
   targets: [
+    .macro(
+        name: "NinjaMacros",
+        dependencies: [
+            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+            .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+        ]
+    ),
     .target(
       name: "AsyncNinja",
       dependencies: [
@@ -49,6 +59,11 @@ let package = Package(
       name: "AsyncNinjaTests",
       dependencies: ["AsyncNinja"],
       path: "Tests/AsyncNinja"
+    ),
+    .testTarget(
+      name: "AsyncNinjaMacrosTests",
+      dependencies: ["AsyncNinja", "NinjaMacros", .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),],
+      path: "Tests/NinjaMacros"
     ),
 
     .target(
