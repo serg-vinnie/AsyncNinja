@@ -429,7 +429,8 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = NinjaMacros;
+			name = NinjaMacros;
+			path = Sources/NinjaMacros;
 			sourceTree = "<group>";
 		};
 		OBJ_124 /* Products */ = {
