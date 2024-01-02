@@ -9,7 +9,8 @@ struct MapperID {
 
 struct Mapper {
     let id : MapperID
-    let declarations : [MapperDeclaration]
+    let spaceID : SpaceID
+    let declaration : MapperDeclaration
     
     var input : SpaceID { SpaceID(id: "Swift") }
     var output: SpaceID { SpaceID(id: "Void") }
