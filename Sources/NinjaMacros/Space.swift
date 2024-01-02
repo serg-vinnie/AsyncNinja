@@ -7,6 +7,11 @@ struct SpaceID {
     let id : String
 }
 
+extension SourceFileSyntax {
+    var spacesDeclarations  : [SpaceDeclaration]  { SpacesExtractor(viewMode: .fixedUp).extract(self) }
+    var mappersDeclarations : [MapperDeclaration] { MappersExtractor(viewMode: .fixedUp).extract(self) }
+}
+
 struct SwiftFile {
     let spaces : [Space]
     let mappers : [Mapper]
