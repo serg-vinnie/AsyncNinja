@@ -7,21 +7,22 @@ struct SpaceID {
     let id : String
 }
 
-protocol AnySpace {
-    var spaces  : [AnySpace]    { get }
-    var mappers : [AnyMapper]      { get }
+struct SwiftFile {
+    let spaces : [Space]
+    let mappers : [Mapper]
 }
 
-struct Space<SyntaxType: SyntaxProtocol> : AnySpace {
-    var spaces: [AnySpace] {
-        return SpacesExtractor(viewMode: .fixedUp).extract(syntax)
-    }
-    
-    var mappers: [AnyMapper] {
-        return []
-    }
-    
-    let syntax: SyntaxType
+struct Space {
+    let id: SpaceID
+    let declarations: [SpaceDeclaration]
+}
+
+enum SpaceDeclaration {
+    case Struct(StructDeclSyntax)
+    case Class(ClassDeclSyntax)
+    case Proto(ProtocolDeclSyntax)
+    case Extension(ExtensionDeclSyntax)
+    case Enum(EnumDeclSyntax)
 }
 
 class SpacesExtractor: SyntaxVisitor {
@@ -29,13 +30,15 @@ class SpacesExtractor: SyntaxVisitor {
     var classes:    [ClassDeclSyntax] = []
     var protocols:  [ProtocolDeclSyntax] = []
     var extensions: [ExtensionDeclSyntax] = []
+    var enums:      [EnumDeclSyntax] = []
     
-    func extract<SyntaxType: SyntaxProtocol>( _ syntax: SyntaxType) -> [AnySpace] {
+    func extract<SyntaxType: SyntaxProtocol>( _ syntax: SyntaxType) -> [SpaceDeclaration] {
         self.walk(syntax)
-        return [structs.map { Space(syntax: $0) as AnySpace },
-                classes.map { Space(syntax: $0) as AnySpace},
-                protocols.map { Space(syntax: $0) as AnySpace},
-                extensions.map { Space(syntax: $0) as AnySpace}]
+        return [structs.map { SpaceDeclaration.Struct($0) },
+                classes.map { SpaceDeclaration.Class($0) },
+                protocols.map { SpaceDeclaration.Proto($0) },
+                extensions.map { SpaceDeclaration.Extension($0) },
+                enums.map { SpaceDeclaration.Enum($0) }]
             .flatMap { $0 }
     }
     
@@ -58,32 +61,11 @@ class SpacesExtractor: SyntaxVisitor {
         extensions.append(node)
         return .skipChildren
     }
-}
-
-
-class ClassExtractor: SyntaxVisitor {
-    var items: [String] = []
     
-    init() {
-        super.init(viewMode: .fixedUp)
-    }
-    
-    func extract<SyntaxType: SyntaxProtocol>( _ syntax: SyntaxType) -> [String] {
-        self.walk(syntax)
-        return items
-    }
-    
-    override func visit(_ node: VariableDeclSyntax) -> SyntaxVisitorContinueKind {
-        items.append("VAR  \(node.trimmedDescription)")
-        return .skipChildren
-    }
-    
-    override func visit(_ node: StructDeclSyntax) -> SyntaxVisitorContinueKind {
-        return .skipChildren
-    }
-    
-    override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
-        items.append("FUNC \(node.asFunctionTypeSyntax.trimmedDescription)")
+    override func visit(_ node: EnumDeclSyntax) -> SyntaxVisitorContinueKind {
+        enums.append(node)
         return .skipChildren
     }
 }
+
+

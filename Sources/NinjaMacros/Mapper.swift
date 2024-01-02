@@ -7,25 +7,27 @@ struct MapperID {
     let id : String
 }
 
-protocol AnyMapper {
-    var input  : SpaceID { get }
-    var output : SpaceID { get }
-}
-
-struct Mapper<SyntaxType: SyntaxProtocol>: AnyMapper {
-    let syntax: SyntaxType
+struct Mapper {
+    let id : MapperID
+    let declarations : [MapperDeclaration]
     
     var input : SpaceID { SpaceID(id: "Swift") }
-    var output: SpaceID { SpaceID(id: "Swift") }
+    var output: SpaceID { SpaceID(id: "Void") }
+}
+
+enum MapperDeclaration {
+    case Function(FunctionDeclSyntax)
+    case Variable(VariableDeclSyntax)
 }
 
 class MappersExtractor: SyntaxVisitor {
     var funcs:    [FunctionDeclSyntax] = []
     var vars:     [VariableDeclSyntax] = []
     
-    func extract<SyntaxType: SyntaxProtocol>( _ syntax: SyntaxType) -> [AnySpace] {
+    func extract<SyntaxType: SyntaxProtocol>( _ syntax: SyntaxType) -> [MapperDeclaration] {
         self.walk(syntax)
-        return [funcs.map { Space(syntax: $0) as AnySpace }]
+        return [funcs.map { MapperDeclaration.Function($0) },
+                vars.map { MapperDeclaration.Variable($0) }]
             .flatMap { $0 }
     }
     
