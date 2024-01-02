@@ -8,6 +8,7 @@ import SwiftSyntaxMacros
 @attached(member, names: arbitrary)
 public macro demoMacro() = #externalMacro(module: "NinjaMacros", type: "DemoMacro")
 
+/***/
 public struct DemoMacro: PeerMacro {
 //    public static func expansion(of node: SwiftSyntax.AttributeSyntax,
 //                                 providingMembersOf declaration: some SwiftSyntax.DeclGroupSyntax,
@@ -19,9 +20,16 @@ public struct DemoMacro: PeerMacro {
                                  providingPeersOf declaration: some SwiftSyntax.DeclSyntaxProtocol,
                                  in context: some SwiftSyntaxMacros.MacroExpansionContext) throws -> [SwiftSyntax.DeclSyntax] {
         
-        let classDecl = declaration.cast(ClassDeclSyntax.self)
+        if let _protocol = declaration.as(ProtocolDeclSyntax.self) {
+            
+            
+            return ["protocol \(raw: _protocol.name.trimmed)2 {}"]
+        } else if let _class = declaration.as(ClassDeclSyntax.self) {
+//            return []
+            return ["class \(raw: _class.name.trimmed)2 { /* \n\(raw: ClassExtractor().extract(_class).joined(separator: "\n")) */ }"]
+        }
         
-        return ["class \(raw: classDecl.name.trimmed)2 {}"]
+        fatalError("unexpected declaration")
     }
     
 }
@@ -30,8 +38,12 @@ extension FunctionDeclSyntax {
     var asFunctionTypeSyntax : FunctionTypeSyntax {
         let inputTypes = self.signature.parameterClause.parameters.map(\.type)
         let outputType = self.signature.returnClause?.type ?? TypeSyntax("Void")
-        let tupleElements =
-        TupleTypeElementListSyntax(inputTypes.map { TupleTypeElementSyntax(type: $0)} )
+        let tupleElements = //TupleTypeElementListSyntax(inputTypes.map { TupleTypeElementSyntax(type: $0)} )
+        TupleTypeElementListSyntax {
+            for t in inputTypes {
+                TupleTypeElementSyntax(type: t)
+            }
+        }
         return FunctionTypeSyntax(parameters: tupleElements, returnClause: ReturnClauseSyntax(type: outputType))
     }
 }

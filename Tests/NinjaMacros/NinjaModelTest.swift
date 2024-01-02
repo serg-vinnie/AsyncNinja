@@ -40,11 +40,17 @@ final class boilerplateTests: XCTestCase {
     func testDemo() throws {
         let classDeclaration =  """
                                 class Test {
+                                var foo = "Foo"
+                                func bar(_ v: Int, name: String) -> String { "" }
+                                func bbar() -> (Int,String)->String
                                 }
                                 """
         
         let targetDeclaration = """
-                                class Test2 {
+                                class Test2 { /* 
+                                VAR  var foo = "Foo"
+                                FUNC (Int,String)->String
+                                FUNC ()->(Int,String)->String */
                                 }
                                 """
         
