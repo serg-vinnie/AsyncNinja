@@ -173,8 +173,23 @@ public extension Completing {
   
   @discardableResult
   func assign<T:ExecutionContext>(
-    on context: T, executor: Executor? = nil,
+    on context: T, executor: Executor? = .main,
     to keyPath: ReferenceWritableKeyPath<T, Success>
+  ) -> Self {
+    return onComplete(context: context, executor: executor
+    ) { (context, completion) in
+      switch completion {
+      case .success(let success):
+        context[keyPath: keyPath] = success
+      default: break
+      }
+    }
+  }
+  
+  @discardableResult
+  func assign<T:ExecutionContext>(
+    on context: T, executor: Executor? = .main,
+    to keyPath: ReferenceWritableKeyPath<T, Success?>
   ) -> Self {
     return onComplete(context: context, executor: executor
     ) { (context, completion) in
