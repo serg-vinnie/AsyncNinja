@@ -1,7 +1,6 @@
 
 import Foundation
 import SwiftSyntax
-import Essentials
 
 struct MapperID {
     let id : String
