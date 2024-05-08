@@ -60,13 +60,49 @@ import Essentials
   public var projectedValue: Channel<Value, Void> { get { return _producer } }
   
   private let _producer : Producer<Value, Void>
+  private let _refresher : Refresher<Value>
+  
+  @discardableResult
+  public func refresh() -> Future<Value> { _refresher.refresh() }
   
   /// Initialize the storage of the Published property as well as the corresponding `Publisher`.
-  public init(wrappedValue: Value?) {
+  public init(wrappedValue: Value?, _ getter: (()->R<Value>)? = nil) {
+    let _p : Producer<Value, Void>
+    
     if let v = wrappedValue {
-      self._producer = Producer<Value,Void>(bufferSize: 1, bufferedUpdates: [v])
+      _p = Producer<Value,Void>(bufferSize: 1, bufferedUpdates: [v])
     } else {
-      self._producer = Producer<Value,Void>(bufferSize: 1)
+      _p = Producer<Value,Void>(bufferSize: 1)
+    }
+    
+    _producer = _p
+    _refresher = .init(producer: _p, getter: getter)
+  }
+}
+
+class Refresher<Value> : ExecutionContext, ReleasePoolOwner {
+  public var executor    = Executor.init(queue: DispatchQueue.global(qos: .userInteractive))
+  public let releasePool = ReleasePool()
+  
+  private let _producer : Producer<Value, Void>
+  private let _getter : (()->R<Value>)?
+  
+  init(producer: Producer<Value, Void>, getter: (() -> R<Value>)?) {
+    self._producer = producer
+    self._getter = getter
+  }
+  
+  func refresh() -> Future<Value> {
+    if let getter = _getter {
+      return self.promise { me, promise  in
+        let val = getter()
+        promise.complete(val)
+      }
+      .onSuccess(context: self) { me, value in
+        me._producer.update(value)
+      }
+    } else {
+      return .failed(WTF("_getter == nil"))
     }
   }
 }
