@@ -35,6 +35,10 @@ let package = Package(
       "AsyncNinja",
       "AsyncNinjaReactiveUI"
     ]),
+    .library(name: "AsyncNinjaStatic", type: .static, targets: [
+      "AsyncNinja",
+      "AsyncNinjaReactiveUI"
+    ]),
     .library(
         name: "NinjaMacros",
         targets: ["NinjaMacros"]
