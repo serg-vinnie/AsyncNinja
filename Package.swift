@@ -31,7 +31,7 @@ let package = Package(
     .executable(name: "ImportingTestExecutable", targets: [
       "ImportingTestExecutable"
     ]),
-    .library(name: "AsyncNinja", targets: [
+    .library(name: "AsyncNinja", type: .dynamic, targets: [
       "AsyncNinja",
       "AsyncNinjaReactiveUI"
     ]),
