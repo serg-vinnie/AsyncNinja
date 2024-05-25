@@ -44,15 +44,20 @@ import Essentials
 public struct Feedback {
   let log: ((String)->())?
   let error: ((Error)->())?
+  
+  public init(log: ((String) -> Void)?, error: ((Error) -> Void)?) {
+    self.log = log
+    self.error = error
+  }
 }
 
 public struct ResultBinding<Value> {
   let getter: ()->R<Value>
-  let setter: (R<Value>)->R<Void>
+  let setter: (Value)->R<Void>
   let executor: Executor?
   let feedback: Feedback?
   
-  public init(getter: @escaping () -> R<Value>, setter: @escaping (R<Value>) -> R<Void>, executor: Executor? = nil, feedback: Feedback? = nil) {
+  public init(getter: @escaping () -> R<Value>, setter: @escaping (Value) -> R<Void>, executor: Executor? = nil, feedback: Feedback? = nil) {
     self.getter = getter
     self.setter = setter
     self.executor = executor
@@ -66,14 +71,14 @@ public struct ResultBinding<Value> {
       guard let v = newValue else { return }
       let p = _producer
       guard let binding = _binding else {
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
           p.update(v)
         }
         return
       }
       
-      binding.setter(.success(v))
-        .onSuccess { DispatchQueue.main.sync { p.update(v) } }
+      binding.setter(v)
+        .onSuccess { DispatchQueue.main.async { p.update(v) } }
         .onFailure { error in _binding?.feedback?.error?(error) }
     }
     get {
