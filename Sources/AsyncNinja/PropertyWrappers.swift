@@ -41,42 +41,73 @@ import Essentials
   }
 }
 
+public struct Feedback {
+  let log: ((String)->())?
+  let error: ((Error)->())?
+}
+
+public struct ResultBinding<Value> {
+  let getter: ()->R<Value>
+  let setter: (R<Value>)->R<Void>
+  let executor: Executor?
+  let feedback: Feedback?
+  
+  public init(getter: @escaping () -> R<Value>, setter: @escaping (R<Value>) -> R<Void>, executor: Executor? = nil, feedback: Feedback? = nil) {
+    self.getter = getter
+    self.setter = setter
+    self.executor = executor
+    self.feedback = feedback
+  }
+}
+
 @propertyWrapper public struct OptionalProducer<Value> {
   public var wrappedValue : Value? {
     set {
+      guard let v = newValue else { return }
       let p = _producer
-      DispatchQueue.main.async {
-        if let v = newValue {
+      guard let binding = _binding else {
+        DispatchQueue.main.sync {
           p.update(v)
         }
+        return
       }
+      
+      binding.setter(.success(v))
+        .onSuccess { DispatchQueue.main.sync { p.update(v) } }
+        .onFailure { error in _binding?.feedback?.error?(error) }
     }
     get {
       _producer._bufferedUpdates.last
     }
   }
-  
+
   /// The property that can be accessed with the `$` syntax and allows access to the `Channel`
   public var projectedValue: Channel<Value, Void> { get { return _producer } }
   
   private let _producer : Producer<Value, Void>
   private let _refresher : Refresher<Value>
+  private let _binding: ResultBinding<Value>?
   
   @discardableResult
   public func refresh() -> Future<Value> { _refresher.refresh() }
   
   /// Initialize the storage of the Published property as well as the corresponding `Publisher`.
-  public init(wrappedValue: Value?, _ getter: (()->R<Value>)? = nil) {
+  public init(_ binding: ResultBinding<Value>? = nil) {
     let _p : Producer<Value, Void>
     
-    if let v = wrappedValue {
-      _p = Producer<Value,Void>(bufferSize: 1, bufferedUpdates: [v])
+    if let binding = binding, binding.executor == nil, let value = binding.getter().maybeSuccess {
+      _p = Producer<Value,Void>(bufferSize: 1, bufferedUpdates: [value])
     } else {
       _p = Producer<Value,Void>(bufferSize: 1)
     }
     
     _producer = _p
-    _refresher = .init(producer: _p, getter: getter)
+    _refresher = .init(producer: _p, bidning: binding)
+    _binding = binding
+    
+    if let _ = binding?.executor {
+      _ = _refresher.refresh()
+    }
   }
 }
 
@@ -85,24 +116,31 @@ class Refresher<Value> : ExecutionContext, ReleasePoolOwner {
   public let releasePool = ReleasePool()
   
   private let _producer : Producer<Value, Void>
-  private let _getter : (()->R<Value>)?
+  private let _binding: ResultBinding<Value>?
   
-  init(producer: Producer<Value, Void>, getter: (() -> R<Value>)?) {
+  init(producer: Producer<Value, Void>, bidning: ResultBinding<Value>?) {
     self._producer = producer
-    self._getter = getter
+    self._binding = bidning
   }
   
   func refresh() -> Future<Value> {
-    if let getter = _getter {
-      return self.promise { me, promise  in
-        let val = getter()
-        promise.complete(val)
+    guard let binding = _binding else {  return .failed(WTF("_binding == nil")) }
+    
+    if let executor = binding.executor {
+      return self.promise(executor: executor) { me, promise  in
+        binding.feedback?.log?("refreshing")
+        promise.complete(binding.getter())
       }
       .onSuccess(context: self) { me, value in
         me._producer.update(value)
       }
+      
     } else {
-      return .failed(WTF("_getter == nil"))
+      binding.feedback?.log?("refreshing")
+      let value = binding.getter()
+        .onSuccess { _producer.update($0) }
+      return .completed(value)
+      
     }
   }
 }
