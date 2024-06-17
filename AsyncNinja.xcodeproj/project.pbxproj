@@ -22,8 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1DE333522C20578F009440EA /* Essentials in Frameworks */ = {isa = PBXBuildFile; productRef = 1DE333512C20578F009440EA /* Essentials */; };
 		E62778AE2629BC9D001A3A4F /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62778AD2629BC9D001A3A4F /* Concurrency.swift */; };
-		E63AFE5029D63F7500557908 /* Essentials in Frameworks */ = {isa = PBXBuildFile; productRef = E63AFE4F29D63F7500557908 /* Essentials */; };
 		E652E6B22620D68C00D98AEF /* Array+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652E6B12620D68C00D98AEF /* Array+Future.swift */; };
 		E6B509212607E0B700200979 /* EventSource_Folding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B509202607E0B700200979 /* EventSource_Folding.swift */; };
 		OBJ_148 /* BaseProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* BaseProducer.swift */; };
@@ -378,7 +378,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				E63AFE5029D63F7500557908 /* Essentials in Frameworks */,
+				1DE333522C20578F009440EA /* Essentials in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,7 +663,7 @@
 			);
 			name = AsyncNinja;
 			packageProductDependencies = (
-				E63AFE4F29D63F7500557908 /* Essentials */,
+				1DE333512C20578F009440EA /* Essentials */,
 			);
 			productName = AsyncNinja;
 			productReference = "AsyncNinja::AsyncNinja::Product" /* AsyncNinja.framework */;
@@ -788,7 +788,7 @@
 			);
 			mainGroup = OBJ_5;
 			packageReferences = (
-				E63AFE4E29D63F7500557908 /* XCRemoteSwiftPackageReference "essentials" */,
+				1DE333502C20578F009440EA /* XCRemoteSwiftPackageReference "essentials" */,
 			);
 			productRefGroup = OBJ_124 /* Products */;
 			projectDirPath = "";
@@ -1493,9 +1493,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E63AFE4E29D63F7500557908 /* XCRemoteSwiftPackageReference "essentials" */ = {
+		1DE333502C20578F009440EA /* XCRemoteSwiftPackageReference "essentials" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@gitlab.com:sergiy.vynnychenko/essentials.git";
+			repositoryURL = "https://gitlab.com/sergiy.vynnychenko/essentials.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -1504,9 +1504,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E63AFE4F29D63F7500557908 /* Essentials */ = {
+		1DE333512C20578F009440EA /* Essentials */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E63AFE4E29D63F7500557908 /* XCRemoteSwiftPackageReference "essentials" */;
+			package = 1DE333502C20578F009440EA /* XCRemoteSwiftPackageReference "essentials" */;
 			productName = Essentials;
 		};
 /* End XCSwiftPackageProductDependency section */
