@@ -32,12 +32,10 @@ let package = Package(
       "ImportingTestExecutable"
     ]),
     .library(name: "AsyncNinja", type: .dynamic, targets: [
-      "AsyncNinja",
-      "AsyncNinjaReactiveUI"
+      "AsyncNinja"
     ]),
     .library(name: "AsyncNinjaStatic", type: .static, targets: [
-      "AsyncNinja",
-      "AsyncNinjaReactiveUI"
+      "AsyncNinja"
     ]),
     .library(
         name: "NinjaMacros",
@@ -73,18 +71,6 @@ let package = Package(
       dependencies: ["AsyncNinja", "NinjaMacros", .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),],
       path: "Tests/NinjaMacros"
     ),
-
-    .target(
-      name: "AsyncNinjaReactiveUI",
-      dependencies: ["AsyncNinja"],
-      path: "Sources/AsyncNinjaReactiveUI"
-    ),
-    .testTarget(
-      name: "AsyncNinjaReactiveUITests",
-      dependencies: ["AsyncNinjaReactiveUI"],
-      path: "Tests/AsyncNinjaReactiveUI"
-    ),
-
     .target(
       name: "ImportingTestExecutable",
       dependencies: ["AsyncNinja", "AsyncNinjaReactiveUI"],

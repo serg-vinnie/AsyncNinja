@@ -1,14 +1,15 @@
 {
+  "originHash" : "c87d454285350966af24cc056c5f18304c5d4daad5f4437b702533bcbd2c1895",
   "pins" : [
     {
       "identity" : "essentials",
       "kind" : "remoteSourceControl",
-      "location" : "git@gitlab.com:sergiy.vynnychenko/essentials.git",
+      "location" : "https://gitlab.com/sergiy.vynnychenko/essentials.git",
       "state" : {
         "branch" : "master",
-        "revision" : "e031e36ccadaf41a1a0ee4903ecd77b4a4cf9664"
+        "revision" : "647baf263e139e3b8e5b73d772f430ab20b2cc52"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
