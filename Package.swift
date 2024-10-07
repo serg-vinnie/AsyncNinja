@@ -37,6 +37,12 @@ let package = Package(
     .library(name: "AsyncNinjaStatic", type: .static, targets: [
       "AsyncNinja"
     ]),
+//    .library(name: "AsyncNinjaReactiveUI", type: .dynamic, targets: [
+//      "AsyncNinjaReactiveUI"
+//    ]),
+//    .library(name: "AsyncNinjaReactiveUIStatic", type: .static, targets: [
+//      "AsyncNinjaReactiveUI"
+//    ]),
 //
 //    .library(
 //        name: "NinjaMacros",
@@ -67,16 +73,27 @@ let package = Package(
       dependencies: ["AsyncNinja"],
       path: "Tests/AsyncNinja"
     ),
-    .testTarget(
-      name: "AsyncNinjaMacrosTests",
-      dependencies: ["AsyncNinja", "NinjaMacros", .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),],
-      path: "Tests/NinjaMacros"
-    ),
+//    .testTarget(
+//      name: "AsyncNinjaMacrosTests",
+//      dependencies: ["AsyncNinja", "NinjaMacros", .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),],
+//      path: "Tests/NinjaMacros"
+//    ),
     .target(
       name: "ImportingTestExecutable",
       dependencies: ["AsyncNinja"],
       path: "Sources/ImportingTestExecutable"
-    )
+    ),
+//    .target(
+//      name: "AsyncNinjaReactiveUI",
+//      dependencies: ["AsyncNinja"],
+//      path: "Sources/AsyncNinjaReactiveUI"
+//    ),
+//    .testTarget(
+//      name: "AsyncNinjaReactiveUITests",
+//      dependencies: ["AsyncNinjaReactiveUI"],
+//      path: "Tests/AsyncNinjaReactiveUI"
+//    ),
+ 
   ],
   swiftLanguageVersions: [.v5]
 )
