@@ -37,23 +37,24 @@ let package = Package(
     .library(name: "AsyncNinjaStatic", type: .static, targets: [
       "AsyncNinja"
     ]),
-    .library(
-        name: "NinjaMacros",
-        targets: ["NinjaMacros"]
-    ),
+//
+//    .library(
+//        name: "NinjaMacros",
+//        targets: ["NinjaMacros"]
+//    ),
   ],
   dependencies: [
       .package(url: "https://gitlab.com/sergiy.vynnychenko/essentials.git", branch: "master" ),
       .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
   ],
   targets: [
-    .macro(
-        name: "NinjaMacros",
-        dependencies: [
-            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-            .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-        ]
-    ),
+//    .macro(
+//        name: "NinjaMacros",
+//        dependencies: [
+//            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+//            .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+//        ]
+//    ),
     .target(
       name: "AsyncNinja",
       dependencies: [
